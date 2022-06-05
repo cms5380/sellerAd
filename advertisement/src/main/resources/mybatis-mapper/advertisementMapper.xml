@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.charminseok.sellerad.ad.mapper.AdvertisementMapper">
+
+
+    <insert id="insertAdvertisement" parameterType="com.charminseok.sellerad.ad.dto.AdvertisementDTO">
+        INSERT INTO Advertisement (company_id, product_id, advertisement_price)
+        values (#{companyId}, #{productId}, #{advertisementPrice});
+    </insert>
+
+    <resultMap id="selectAdvertisementListMap" type="com.charminseok.sellerad.ad.dto.AdvertisementResponse">
+        <id column="ADVERTISEMENT_ID" property="advertisementId"/>
+    </resultMap>
+
+    <select id="selectAdvertisementList" resultMap="selectAdvertisementListMap">
+        SELECT
+            ADVERTISEMENT.ADVERTISEMENT_ID
+            , ADVERTISEMENT.COMPANY_ID
+            , ADVERTISEMENT.PRODUCT_ID
+            , PRODUCT.PRODUCT_NAME
+            , PRODUCT.PRICE AS PRODUCT_PRICE
+            , ADVERTISEMENT.ADVERTISEMENT_PRICE
+        FROM ADVERTISEMENT
+        INNER JOIN PRODUCT ON PRODUCT.PRODUCT_ID = ADVERTISEMENT.PRODUCT_ID
+        WHERE PRODUCT.STOCK_COUNT != 0
+        ORDER BY ADVERTISEMENT.ADVERTISEMENT_PRICE DESC
+        LIMIT 3;
+    </select>
+
+    <resultMap id="selectAdvertisementMap" type="com.charminseok.sellerad.ad.domain.AdvertisementDomain">
+        <id column="ADVERTISEMENT_ID" property="advertisementId"/>
+    </resultMap>
+
+    <select id="selectAdvertisementById" resultMap="selectAdvertisementMap">
+        SELECT * FROM Advertisement WHERE advertisement_id = #{advertisementId}
+    </select>
+
+    <insert id="insertCPCTarget" parameterType="com.charminseok.sellerad.ad.dto.CPCTargetDTO">
+        INSERT INTO CPC_TARGET (advertisement_id, click_datetime, advertisement_price)
+        VALUES (#{advertisementId}, NOW(), #{advertisementPrice})
+    </insert>
+</mapper>

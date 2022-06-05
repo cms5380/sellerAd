@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: seller-ad-gateway
+
+server:
+  port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+logging:
+  level:
+    com:
+      charminseok: TRACE
