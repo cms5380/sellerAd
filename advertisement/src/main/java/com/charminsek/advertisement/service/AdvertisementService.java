@@ -1,8 +1,9 @@
 package com.charminsek.advertisement.service;
 
+
 import com.charminsek.advertisement.domain.AdvertisementDomain;
 import com.charminsek.advertisement.dto.AdvertisementDTO;
-import com.charminsek.advertisement.dto.AdvertisementResponse;
+import com.charminsek.advertisement.dto.ResponseAdvertisement;
 import com.charminsek.advertisement.dto.CPCTargetDTO;
 import com.charminsek.advertisement.mapper.AdvertisementMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class AdvertisementService {
         advertisementMapper.insertAdvertisement(advertisementDTO);
     }
 
-    public List<AdvertisementResponse> getAdvertisementList(){
+    public List<ResponseAdvertisement> getAdvertisementList(){
         return advertisementMapper.selectAdvertisementList();
     }
 

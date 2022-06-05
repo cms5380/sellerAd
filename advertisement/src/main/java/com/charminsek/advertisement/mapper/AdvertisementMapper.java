@@ -1,8 +1,9 @@
 package com.charminsek.advertisement.mapper;
 
+
 import com.charminsek.advertisement.domain.AdvertisementDomain;
 import com.charminsek.advertisement.dto.AdvertisementDTO;
-import com.charminsek.advertisement.dto.AdvertisementResponse;
+import com.charminsek.advertisement.dto.ResponseAdvertisement;
 import com.charminsek.advertisement.dto.CPCTargetDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public interface AdvertisementMapper {
     void insertAdvertisement(AdvertisementDTO advertisementDTO);
 
-    List<AdvertisementResponse> selectAdvertisementList();
+    List<ResponseAdvertisement> selectAdvertisementList();
 
     void insertCPCTarget(CPCTargetDTO cpcTargetDTO);
 

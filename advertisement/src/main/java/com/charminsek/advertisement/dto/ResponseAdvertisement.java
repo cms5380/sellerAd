@@ -3,7 +3,7 @@ package com.charminsek.advertisement.dto;
 import lombok.Data;
 
 @Data
-public class AdvertisementResponse {
+public class ResponseAdvertisement {
     private Long advertisementId;
     private Long companyId;
     private Long productId;

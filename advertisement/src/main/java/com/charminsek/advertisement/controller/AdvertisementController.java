@@ -1,7 +1,7 @@
 package com.charminsek.advertisement.controller;
 
 import com.charminsek.advertisement.dto.AdvertisementDTO;
-import com.charminsek.advertisement.dto.AdvertisementResponse;
+import com.charminsek.advertisement.dto.ResponseAdvertisement;
 import com.charminsek.advertisement.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/advertisement")
+@RequestMapping("/advertisement-service/advertisement")
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
 
     @GetMapping
-    public ResponseEntity<List<AdvertisementResponse>> getAdvertisementList(){
-        List<AdvertisementResponse> advertisementList = advertisementService.getAdvertisementList();
+    public ResponseEntity<List<ResponseAdvertisement>> getAdvertisementList(){
+        List<ResponseAdvertisement> advertisementList = advertisementService.getAdvertisementList();
         return new ResponseEntity<>(advertisementList, HttpStatus.OK);
     }
 
