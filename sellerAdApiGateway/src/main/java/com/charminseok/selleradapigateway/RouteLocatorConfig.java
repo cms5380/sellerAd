@@ -17,8 +17,8 @@ public class RouteLocatorConfig {
                         .uri("lb://CONTRACT-SERVICE"))
                 .route("product", route -> route.path("/product-service/**")
                         .uri("lb://PRODUCT-SERVICE"))
-//                .route(route -> route.path("/company-service")
-//                        .uri("http://localhost:9001/"))
+                .route(route -> route.path("/advertisement-service/**")
+                        .uri("lb://ADVERTISEMENT-SERVICE"))
                 .build();
     }
 }
