@@ -1,6 +1,6 @@
 package com.charminseok.company.service;
 
-import com.charminseok.company.feign.client.ProductService;
+import com.charminseok.company.openfeign.client.ProductService;
 import com.charminseok.company.domain.CompanyDomain;
 import com.charminseok.company.dto.CompanyDTO;
 import com.charminseok.company.dto.ResponseProduct;
@@ -29,5 +29,9 @@ public class CompanyService {
         }
 
         return companyMapper.insertCompany(companyDTO);
+    }
+
+    public CompanyDomain selectCompanyById(Long companyId) {
+        return companyMapper.selectCompanyByCompanyId(companyId);
     }
 }

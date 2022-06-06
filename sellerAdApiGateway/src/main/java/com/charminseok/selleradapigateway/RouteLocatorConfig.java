@@ -13,8 +13,6 @@ public class RouteLocatorConfig {
         return routeLocatorBuilder.routes()
                 .route("company-service", route -> route.path("/company-service/**")
                         .uri("lb://COMPANY-SERVICE"))
-                .route("contract-service", route -> route.path("/contract-service/**")
-                        .uri("lb://CONTRACT-SERVICE"))
                 .route("product", route -> route.path("/product-service/**")
                         .uri("lb://PRODUCT-SERVICE"))
                 .route(route -> route.path("/advertisement-service/**")
