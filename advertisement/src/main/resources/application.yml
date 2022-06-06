@@ -14,7 +14,7 @@ spring:
     url: jdbc:h2:mem:advertisement_db
     username: sa
   application:
-    name: advertisement-service
+    name: advertisement
 
 
 # model ???? camel case ??

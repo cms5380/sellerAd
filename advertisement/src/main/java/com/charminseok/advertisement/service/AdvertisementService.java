@@ -5,11 +5,12 @@ import com.charminseok.advertisement.domain.AdvertisementDomain;
 import com.charminseok.advertisement.dto.RequestAdvertisement;
 import com.charminseok.advertisement.dto.ResponseAdvertisement;
 import com.charminseok.advertisement.dto.CPCTargetDTO;
-import com.charminseok.advertisement.feignclient.company.dto.ResponseCompany;
-import com.charminseok.advertisement.feignclient.company.service.CompanyService;
-import com.charminseok.advertisement.feignclient.contract.dto.ResponseContract;
-import com.charminseok.advertisement.feignclient.contract.service.ContractService;
+import com.charminseok.advertisement.openfeign.company.dto.ResponseCompany;
+import com.charminseok.advertisement.openfeign.company.service.CompanyService;
+import com.charminseok.advertisement.openfeign.company.dto.ResponseContract;
 import com.charminseok.advertisement.mapper.AdvertisementMapper;
+import com.charminseok.advertisement.openfeign.product.dto.ResponseProduct;
+import com.charminseok.advertisement.openfeign.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class AdvertisementService {
     private final AdvertisementMapper advertisementMapper;
     private final CompanyService companyService;
-    private final ContractService contractService;
+    private final ProductService productService;
 
     public void bidAdvertisement(RequestAdvertisement requestAdvertisement){
         ResponseCompany companyById = companyService.getCompanyById(requestAdvertisement.getCompanyId());
@@ -28,7 +29,7 @@ public class AdvertisementService {
             throw new RuntimeException("입력한 회사가 없습니다.");
         }
 
-        ResponseContract contractByCompanyId = contractService.getContractByCompanyId(requestAdvertisement.getCompanyId());
+        ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
         if(contractByCompanyId.isValidContract()){
             advertisementMapper.insertAdvertisement(requestAdvertisement);
         } else {
@@ -38,6 +39,10 @@ public class AdvertisementService {
     }
 
     public List<ResponseAdvertisement> getAdvertisementList(){
+        List<ResponseProduct> productList = productService.getProductList();
+        List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList();
+
+//        responseAdvertisements.stream().filter(ad -> ad.getProductId().)
         return advertisementMapper.selectAdvertisementList();
     }
 
