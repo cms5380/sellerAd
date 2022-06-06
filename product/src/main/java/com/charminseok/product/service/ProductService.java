@@ -5,6 +5,8 @@ import com.charminseok.product.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -12,5 +14,9 @@ public class ProductService {
 
     public ProductDomain getProductByCompanyName(String companyName){
         return productMapper.selectProductByCompanyName(companyName);
+    }
+
+    public List<ProductDomain> getProductList() {
+        return productMapper.selectProductList();
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class productController {
@@ -19,6 +21,13 @@ public class productController {
     public ResponseEntity<?> getProducts(@PathVariable("companyName") String companyName){
         ProductDomain product = productService.getProductByCompanyName(companyName);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<?> getProductList(){
+        List<ProductDomain> productList = productService.getProductList();
+
+        return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
 }

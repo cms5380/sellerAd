@@ -11,4 +11,8 @@
     <select id="selectProductByCompanyName" resultMap="Product">
         SELECT * FROM PRODUCT WHERE company_name = #{companyName} LIMIT 1;
     </select>
+
+    <select id="selectProductList" resultMap="Product">
+        SELECT * FROM PRODUCT WHERE stockCount > 0;
+    </select>
 </mapper>
