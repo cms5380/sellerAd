@@ -1,4 +1,4 @@
-package com.charminsek.advertisement;
+package com.charminseok.advertisement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

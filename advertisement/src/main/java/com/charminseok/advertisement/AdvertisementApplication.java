@@ -1,4 +1,4 @@
-package com.charminsek.advertisement;
+package com.charminseok.advertisement;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

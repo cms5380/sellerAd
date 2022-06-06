@@ -1,4 +1,4 @@
-package com.charminsek.advertisement.feignclient.error;
+package com.charminseok.advertisement.feignclient.error;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;

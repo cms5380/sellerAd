@@ -1,11 +1,12 @@
-package com.charminsek.advertisement.controller;
+package com.charminseok.advertisement.controller;
 
-import com.charminsek.advertisement.dto.AdvertisementDTO;
-import com.charminsek.advertisement.dto.ResponseAdvertisement;
-import com.charminsek.advertisement.service.AdvertisementService;
+import com.charminseok.advertisement.dto.RequestAdvertisement;
+import com.charminseok.advertisement.dto.ResponseAdvertisement;
+import com.charminseok.advertisement.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public ResponseEntity bidAdvertisement(@RequestBody AdvertisementDTO advertisementDTO){
-        advertisementService.bidAdvertisement(advertisementDTO);
+    public ResponseEntity bidAdvertisement(@RequestBody @Validated RequestAdvertisement requestAdvertisement){
+        advertisementService.bidAdvertisement(requestAdvertisement);
         return new ResponseEntity(HttpStatus.OK);
     }
 

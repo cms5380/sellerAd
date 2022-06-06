@@ -1,4 +1,4 @@
-package com.charminsek.advertisement.dto;
+package com.charminseok.advertisement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

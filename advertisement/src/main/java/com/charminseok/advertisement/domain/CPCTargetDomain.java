@@ -1,4 +1,4 @@
-package com.charminsek.advertisement.domain;
+package com.charminseok.advertisement.domain;
 
 import lombok.Data;
 
