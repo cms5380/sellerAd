@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/contract-service/contract")
+@RequestMapping("/contract")
 public class ContractController {
     private final ContractService contractService;
 
@@ -24,14 +24,14 @@ public class ContractController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getContractList(){
+    public ResponseEntity<?> getContractList() {
         List<ContractDomain> contractList = contractService.getContractList();
 
         return new ResponseEntity<>(contractList, HttpStatus.OK);
     }
 
     @GetMapping("/{companyId}")
-    public ResponseEntity<?> getContractByCompanyId(@PathVariable("companyId") Long companyId){
+    public ResponseEntity<?> getContractByCompanyId(@PathVariable("companyId") Long companyId) {
         ContractDomain contractByCompanyId = contractService.getContractByCompanyId(companyId);
         return new ResponseEntity<>(contractByCompanyId, HttpStatus.OK);
     }

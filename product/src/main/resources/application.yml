@@ -21,7 +21,7 @@ spring:
     url: jdbc:h2:mem:product_db
     username: sa
   application:
-    name: product-service
+    name: product
 
 
 # model ???? camel case ??
@@ -29,7 +29,6 @@ mybatis:
   mapper-locations: mybatis-mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
-#  type-aliases-package: com.charminseok.sellerad.**.domain
 
 # mapper ???? ??
 logging:

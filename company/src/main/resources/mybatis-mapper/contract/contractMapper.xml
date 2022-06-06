@@ -3,13 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.charminseok.contract.mapper.ContractMapper">
-    <insert id="insertContract" parameterType="com.charminseok.contract.dto.ContractDTO">
+<mapper namespace="com.charminseok.company.mapper.ContractMapper">
+    <insert id="insertContract" parameterType="com.charminseok.company.dto.ContractDTO">
         INSERT INTO Contract (COMPANY_ID, CONTRACT_START_DATE, CONTRACT_END_DATE)
         VALUES (#{Contract.companyId}, #{Contract.contractStartDate}, #{Contract.contractEndDate})
     </insert>
 
-    <resultMap id="contract" type="com.charminseok.contract.domain.ContractDomain">
+    <resultMap id="contract" type="com.charminseok.company.domain.ContractDomain">
         <id property="contractId" column="contract_id"/>
     </resultMap>
 

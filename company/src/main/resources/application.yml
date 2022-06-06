@@ -14,15 +14,14 @@ spring:
     url: jdbc:h2:mem:company_db
     username: sa
   application:
-    name: company-service
+    name: company
 
 
 # model ???? camel case ??
 mybatis:
-  mapper-locations: mybatis-mapper/*.xml
+  mapper-locations: mybatis-mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
-#  type-aliases-package: com.charminseok.company.domain
 
 # mapper ???? ??
 logging:

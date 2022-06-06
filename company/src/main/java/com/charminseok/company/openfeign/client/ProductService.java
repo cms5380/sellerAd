@@ -5,8 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "product-service")
+@FeignClient(name = "product")
 public interface ProductService {
-    @GetMapping("/product-service/product/{companyName}")
+    @GetMapping("/product/{companyName}")
     ResponseProduct getProductByCompanyName(@PathVariable String companyName);
 }

@@ -10,22 +10,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/company-service")
+@RequestMapping("/company")
 public class CompanyController {
     private final CompanyService companyService;
 
-    @PostMapping("/company")
+    @PostMapping
     public ResponseEntity<CompanyDomain> registerCompany(@RequestBody CompanyDTO companyDTO) throws Exception {
         companyService.registerCompany(companyDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/company")
-    public ResponseEntity<CompanyDomain> getCompany(@RequestParam(value = "companyName", required = false) String companyName, @RequestParam(value = "companyId", required = false) Long companyId){
+    @GetMapping
+    public ResponseEntity<CompanyDomain> getCompany(
+            @RequestParam(value = "companyName", required = false) String companyName,
+            @RequestParam(value = "companyId", required = false) Long companyId
+    ) {
         CompanyDomain companyDomain = null;
-        if(companyName == null && companyId != null){
+        if (companyName == null && companyId != null) {
             companyDomain = companyService.selectCompanyById(companyId);
-        } else if(companyName != null && companyId == null){
+        } else if (companyName != null && companyId == null) {
             companyDomain = companyService.selectCompanyByCompanyName(companyName);
         }
 

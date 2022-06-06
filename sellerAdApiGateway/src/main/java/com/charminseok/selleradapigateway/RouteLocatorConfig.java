@@ -11,12 +11,14 @@ public class RouteLocatorConfig {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder routeLocatorBuilder) {
         return routeLocatorBuilder.routes()
-                .route("company-service", route -> route.path("/company-service/**")
-                        .uri("lb://COMPANY-SERVICE"))
-                .route("product", route -> route.path("/product-service/**")
-                        .uri("lb://PRODUCT-SERVICE"))
-                .route(route -> route.path("/advertisement-service/**")
-                        .uri("lb://ADVERTISEMENT-SERVICE"))
+                .route("company", route -> route.path("/company/**")
+                        .uri("lb://COMPANY"))
+                .route("company", route -> route.path("/contract/**")
+                        .uri("lb://COMPANY"))
+                .route("product", route -> route.path("/product/**")
+                        .uri("lb://PRODUCT"))
+                .route(route -> route.path("/advertisement/**")
+                        .uri("lb://ADVERTISEMENT"))
                 .build();
     }
 }
