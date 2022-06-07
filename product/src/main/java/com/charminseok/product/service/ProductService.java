@@ -12,11 +12,19 @@ import java.util.List;
 public class ProductService {
     private final ProductMapper productMapper;
 
-    public ProductDomain getProductByCompanyName(String companyName){
+    public List<ProductDomain> getProductList(int stockCount) {
+        return productMapper.selectProductList(stockCount);
+    }
+
+    public void setProduct(ProductDomain productDomain) {
+        productMapper.insertProduct(productDomain);
+    }
+
+    public ProductDomain getProductByCompanyName(String companyName) {
         return productMapper.selectProductByCompanyName(companyName);
     }
 
-    public List<ProductDomain> getProductList() {
-        return productMapper.selectProductList();
+    public ProductDomain getProductByProductId(Long productId) {
+        return productMapper.selectProductByProductId(productId);
     }
 }

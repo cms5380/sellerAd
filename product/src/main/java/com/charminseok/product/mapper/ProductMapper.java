@@ -2,16 +2,16 @@ package com.charminseok.product.mapper;
 
 import com.charminseok.product.domain.ProductDomain;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface ProductMapper {
+    ProductDomain selectProductByCompanyName(String companyName);
 
-    ProductDomain selectProductByCompanyName(
-            @Param("companyName") String companyName
-    );
+    ProductDomain selectProductByProductId(Long productId);
 
-    List<ProductDomain> selectProductList();
+    List<ProductDomain> selectProductList(int stockCount);
+
+    void insertProduct(ProductDomain productDomain);
 }

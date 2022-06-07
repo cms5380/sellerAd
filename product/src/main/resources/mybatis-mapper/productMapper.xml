@@ -12,7 +12,18 @@
         SELECT * FROM PRODUCT WHERE company_name = #{companyName} LIMIT 1;
     </select>
 
-    <select id="selectProductList" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE stock_count > 0;
+    <select id="selectProductByProductId" resultMap="Product">
+        SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{productId};
     </select>
+
+    <select id="selectProductList" parameterType="INT" resultMap="Product">
+        SELECT * FROM PRODUCT WHERE stock_count > #{stockCount};
+    </select>
+
+    <insert id="insertProduct" parameterType="com.charminseok.product.domain.ProductDomain">
+        INSERT INTO PRODUCT
+        (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
+        VALUES
+        (#{companyName}, #{productName}, #{price}, #{stockCount})
+    </insert>
 </mapper>
