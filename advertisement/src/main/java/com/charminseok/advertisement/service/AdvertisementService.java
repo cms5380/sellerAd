@@ -14,7 +14,10 @@ import com.charminseok.advertisement.openfeign.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class AdvertisementService {
         if(companyById == null){
             throw new RuntimeException("입력한 회사가 없습니다.");
         }
+        List<ResponseProduct> productList = productService.getProductList();
 
         ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
         if(contractByCompanyId.isValidContract()){
@@ -42,8 +46,22 @@ public class AdvertisementService {
         List<ResponseProduct> productList = productService.getProductList();
         List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList();
 
-//        responseAdvertisements.stream().filter(ad -> ad.getProductId().)
-        return advertisementMapper.selectAdvertisementList();
+        List<ResponseAdvertisement> collect = responseAdvertisements.stream()
+                .filter(ad -> productList.stream()
+                            .anyMatch(responseProduct -> {
+                                if(responseProduct.getProductId().equals(ad.getProductId())){
+                                    ad.setProductName(responseProduct.getProductName());
+                                    ad.setProductPrice(responseProduct.getPrice());
+                                    return true;
+                                }
+                                return false;
+                            }))
+                .sorted(Comparator.comparing(ResponseAdvertisement::getAdvertisementPrice, Comparator.reverseOrder()))
+                .limit(3)
+                .collect(Collectors.toList());
+
+        collect.stream().map(ad -> productList.stream().filter(product -> product.getProductId().equals(ad.getProductId())));
+        return collect;
     }
 
     public AdvertisementDomain getAdvertisement(Long advertisementId){

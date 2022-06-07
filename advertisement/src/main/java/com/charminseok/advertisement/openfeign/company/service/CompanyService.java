@@ -12,6 +12,6 @@ public interface CompanyService {
     @GetMapping("/company")
     ResponseCompany getCompanyById(@RequestParam("companyId") Long companyId);
 
-    @GetMapping("/company/{companyId}/contract")
+    @GetMapping("/contract/{companyId}")
     ResponseContract getContractByCompanyId(@PathVariable Long companyId);
 }
