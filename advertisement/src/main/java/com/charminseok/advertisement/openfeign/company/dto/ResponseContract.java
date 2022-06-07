@@ -1,4 +1,4 @@
-package com.charminseok.advertisement.feignclient.contract.dto;
+package com.charminseok.advertisement.openfeign.company.dto;
 
 import lombok.Data;
 

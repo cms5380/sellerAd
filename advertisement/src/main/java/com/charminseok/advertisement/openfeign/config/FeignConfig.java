@@ -1,6 +1,6 @@
-package com.charminseok.advertisement.feignclient.config;
+package com.charminseok.advertisement.openfeign.config;
 
-import com.charminseok.advertisement.feignclient.error.FeignErrorDecoder;
+import com.charminseok.advertisement.openfeign.error.FeignErrorDecoder;
 import feign.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

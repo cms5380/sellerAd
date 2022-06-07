@@ -18,4 +18,4 @@ eureka:
 logging:
   level:
     com:
-      charminseok: TRACE
+      charminseok: debug

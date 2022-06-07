@@ -1,7 +1,6 @@
 server:
   port: 0
 
-
 spring:
   h2:
     console:
@@ -11,10 +10,10 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    url: jdbc:h2:mem:advertisement_db
+    url: jdbc:h2:mem:testdb
     username: sa
   application:
-    name: advertisement-service
+    name: advertisement
 
 
 # model ???? camel case ??

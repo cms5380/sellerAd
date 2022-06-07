@@ -13,23 +13,26 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/advertisement-service/advertisement")
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
 
-    @GetMapping
+    @GetMapping("/")
+    public String hello(){
+        return "hello";
+    }
+    @GetMapping("/advertisement")
     public ResponseEntity<List<ResponseAdvertisement>> getAdvertisementList(){
         List<ResponseAdvertisement> advertisementList = advertisementService.getAdvertisementList();
         return new ResponseEntity<>(advertisementList, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/advertisement/bidding")
     public ResponseEntity bidAdvertisement(@RequestBody @Validated RequestAdvertisement requestAdvertisement){
         advertisementService.bidAdvertisement(requestAdvertisement);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/cpc/{advertisementId}")
+    @PostMapping("/advertisement/cpc/{advertisementId}")
     public ResponseEntity clickAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.clickAdvertisement(advertisementId);
         return new ResponseEntity(HttpStatus.OK);
