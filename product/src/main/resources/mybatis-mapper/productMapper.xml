@@ -13,6 +13,6 @@
     </select>
 
     <select id="selectProductList" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE stockCount > 0;
+        SELECT * FROM PRODUCT WHERE stock_count > 0;
     </select>
 </mapper>
