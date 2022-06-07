@@ -15,7 +15,7 @@ public interface AdvertisementMapper {
 
     List<ResponseAdvertisement> selectAdvertisementList();
 
-    void insertCPCTarget(CPCTargetDTO cpcTargetDTO);
+    void insertCPCTarget(Long advertisementId);
 
     AdvertisementDomain selectAdvertisementById(Long advertisementId);
 }

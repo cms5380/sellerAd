@@ -14,5 +14,4 @@ import java.time.LocalDateTime;
 public class CPCTargetDTO {
     private Long advertisementId;
     private LocalDateTime ClickDateTime;
-    private int advertisementPrice;
 }

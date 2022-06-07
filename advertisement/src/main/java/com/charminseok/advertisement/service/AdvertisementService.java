@@ -9,6 +9,7 @@ import com.charminseok.advertisement.openfeign.company.dto.ResponseCompany;
 import com.charminseok.advertisement.openfeign.company.service.CompanyService;
 import com.charminseok.advertisement.openfeign.company.dto.ResponseContract;
 import com.charminseok.advertisement.mapper.AdvertisementMapper;
+import com.charminseok.advertisement.openfeign.product.dto.RequestProduct;
 import com.charminseok.advertisement.openfeign.product.dto.ResponseProduct;
 import com.charminseok.advertisement.openfeign.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,11 @@ public class AdvertisementService {
         if(companyById == null){
             throw new RuntimeException("입력한 회사가 없습니다.");
         }
-        List<ResponseProduct> productList = productService.getProductList();
+
+        ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId());
+        if(product == null){
+            throw new RuntimeException("없는 상품입니다.");
+        }
 
         ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
         if(contractByCompanyId.isValidContract()){
@@ -43,7 +48,8 @@ public class AdvertisementService {
     }
 
     public List<ResponseAdvertisement> getAdvertisementList(){
-        List<ResponseProduct> productList = productService.getProductList();
+        int stockCount = 0;
+        List<ResponseProduct> productList = productService.getProductList(stockCount);
         List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList();
 
         List<ResponseAdvertisement> collect = responseAdvertisements.stream()
@@ -69,13 +75,6 @@ public class AdvertisementService {
     }
 
     public void clickAdvertisement(Long advertisementId) {
-        AdvertisementDomain advertisement = getAdvertisement(advertisementId);
-
-        CPCTargetDTO cpcTargetDTO = CPCTargetDTO.builder()
-                .advertisementId(advertisementId)
-                .advertisementPrice(advertisement.getAdvertisementPrice())
-                .build();
-
-        advertisementMapper.insertCPCTarget(cpcTargetDTO);
+        advertisementMapper.insertCPCTarget(advertisementId);
     }
 }
