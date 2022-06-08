@@ -12,8 +12,20 @@ public class FeignErrorDecoder implements ErrorDecoder {
             case 400:
                 break;
             case 404:
-                if (methodKey.contains("getProductByCompanyName")){
+                if (methodKey.contains("getCompanyById")){
                     return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such company.");
+                }
+
+                if (methodKey.contains("getContractByCompanyId")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such contract.");
+                }
+
+                if (methodKey.contains("getProductById")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such product.");
+                }
+
+                if (methodKey.contains("getProductList")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such product.");
                 }
             default:
                 return new Exception(response.reason());

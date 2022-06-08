@@ -20,17 +20,16 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{companyId}")
+    public ResponseEntity<CompanyDomain> getCompanyById(@RequestParam(value = "companyId") Long companyId) {
+        CompanyDomain companyDomain = companyService.selectCompanyById(companyId);
+
+        return new ResponseEntity<>(companyDomain, HttpStatus.OK);
+    }
+
     @GetMapping
-    public ResponseEntity<CompanyDomain> getCompany(
-            @RequestParam(value = "companyName", required = false) String companyName,
-            @RequestParam(value = "companyId", required = false) Long companyId
-    ) {
-        CompanyDomain companyDomain = null;
-        if (companyName == null && companyId != null) {
-            companyDomain = companyService.selectCompanyById(companyId);
-        } else if (companyName != null && companyId == null) {
-            companyDomain = companyService.selectCompanyByCompanyName(companyName);
-        }
+    public ResponseEntity<CompanyDomain> getCompanyByNAme(@RequestParam(value = "companyName", required = false) String companyName) {
+        CompanyDomain companyDomain = companyService.selectCompanyByCompanyName(companyName);
 
         return new ResponseEntity<>(companyDomain, HttpStatus.OK);
     }

@@ -8,5 +8,6 @@
     <file url="file://$PROJECT_DIR$/sellerAdApiGateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sellerAdDiscoveryServer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sellerAdDiscoveryServer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/settlement/src/main/java" charset="UTF-8" />
   </component>
 </project>
