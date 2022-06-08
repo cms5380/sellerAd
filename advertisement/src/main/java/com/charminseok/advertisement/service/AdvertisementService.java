@@ -66,7 +66,6 @@ public class AdvertisementService {
                 .limit(3)
                 .collect(Collectors.toList());
 
-        collect.stream().map(ad -> productList.stream().filter(product -> product.getProductId().equals(ad.getProductId())));
         return collect;
     }
 

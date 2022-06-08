@@ -18,27 +18,20 @@ import java.util.List;
 @Slf4j
 public class ContractService {
     private final ContractMapper contractMapper;
-    private final CompanyService companyService;
 
     public void registerContract(RequestContract requestContract) {
-        CompanyDomain company = companyService.selectCompanyByCompanyName(requestContract.getCompanyName());
+        ContractDomain contractDomain = contractMapper.selectContractByStartDate(requestContract.getCompanyId());
 
-        if (company.getCompanyId() > 1000000000) {
-            ContractDomain contractDomain = contractMapper.selectContractByStartDate(company.getCompanyId());
-
-            if(contractDomain != null){
-                throw new RuntimeException("해당 날짜에 이미 계약이 있습니다.");
-            }
-
-            ContractDTO contractDTO = ContractDTO.builder()
-                    .companyId(company.getCompanyId())
-                    .contractStartDate(LocalDate.now())
-                    .contractEndDate(LocalDate.now().plusYears(1L)).build();
-
-            contractMapper.insertContract(contractDTO);
+        if(contractDomain != null){
+            throw new RuntimeException("해당 날짜에 이미 계약이 있습니다.");
         }
 
+        ContractDTO contractDTO = ContractDTO.builder()
+                .companyId(requestContract.getCompanyId())
+                .contractStartDate(LocalDate.now())
+                .contractEndDate(LocalDate.now().plusYears(1L)).build();
 
+        contractMapper.insertContract(contractDTO);
     }
 
     public List<ContractDomain> getContractList() {

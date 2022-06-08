@@ -16,17 +16,13 @@ import java.util.List;
 public class AdvertisementController {
     private final AdvertisementService advertisementService;
 
-    @GetMapping("/")
-    public String hello(){
-        return "hello";
-    }
     @GetMapping("/advertisement")
     public ResponseEntity<List<ResponseAdvertisement>> getAdvertisementList(){
         List<ResponseAdvertisement> advertisementList = advertisementService.getAdvertisementList();
         return new ResponseEntity<>(advertisementList, HttpStatus.OK);
     }
 
-    @PostMapping("/advertisement/bidding")
+    @PostMapping("/advertisement")
     public ResponseEntity bidAdvertisement(@RequestBody @Validated RequestAdvertisement requestAdvertisement){
         advertisementService.bidAdvertisement(requestAdvertisement);
         return new ResponseEntity(HttpStatus.OK);
