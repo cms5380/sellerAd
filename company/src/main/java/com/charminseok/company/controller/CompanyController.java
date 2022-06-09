@@ -21,7 +21,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public ResponseEntity<CompanyDomain> getCompanyById(@RequestParam(value = "companyId") Long companyId) {
+    public ResponseEntity<CompanyDomain> getCompanyById(@PathVariable(value = "companyId") Long companyId) {
         CompanyDomain companyDomain = companyService.selectCompanyById(companyId);
 
         return new ResponseEntity<>(companyDomain, HttpStatus.OK);
