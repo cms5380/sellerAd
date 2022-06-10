@@ -37,3 +37,14 @@ logging:
       charminseok: debug
 
 
+cloud:
+  stream:
+    bindings:
+      productList:
+        destination: product-list-topic
+      teamDeleted:
+        destination: team-deleted-topic
+    kafka:
+      binder:
+        brokers: localhost:9091,localhost:9092,localhost:9093
+        zkNodes: localhost:2181,localhost:2182,localhost:2183

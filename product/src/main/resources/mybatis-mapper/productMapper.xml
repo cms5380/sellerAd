@@ -8,25 +8,53 @@
         <id column="product_id" property="productId"/>
     </resultMap>
 
-    <select id="selectProductByCompanyName" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE company_name = #{companyName} LIMIT 1;
+    <select id="selectProduct" resultMap="Product">
+        SELECT * FROM PRODUCT
+        WHERE
+        <trim prefixOverrides="AND">
+            <if test="requestProduct.productId != null">
+                AND PRODUCT_ID = #{requestProduct.productId}
+            </if>
+            <if test="requestProduct.productName">
+                AND PRODUCT_NAME = #{requestProduct.productName}
+            </if>
+            <if test="requestProduct.stockCount">
+                AND STOCK_COUNT >= #{requestProduct.stockCount}
+            </if>
+        </trim>
+        LIMIT 1;
     </select>
 
-    <select id="selectProductByProductId" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{requestProduct.productId}
-        <if test="requestProduct != null and requestProduct.stockCount != null">
-            AND stock_count >= #{requestProduct.stockCount}
-        </if>;
-    </select>
+    <select id="selectProductList" resultMap="Product">
+        SELECT *
+        FROM PRODUCT
+        <where>
+            <if test="requestProduct.productId != null">
+                AND PRODUCT_ID = #{requestProduct.productId}
+            </if>
+            <if test="requestProduct.productName">
+                AND PRODUCT_NAME = #{requestProduct.productName}
+            </if>
+            <if test="requestProduct.stockCount">
+                AND STOCK_COUNT >= #{requestProduct.stockCount}
+            </if>
+        </where>
+        LIMIT
+        <if test="requestPaging.start != null">
+            #{start},
+        </if>
+        <if test="requestPaging.pageSize != null">
+            #{pageSize};
+        </if>
+        <if test="requestPaging.pageSize == null">
+            1000;
+        </if>
 
-    <select id="selectProductList" parameterType="INT" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE stock_count > #{stockCount} LIMIT #{start}, #{pageSize};
     </select>
 
     <insert id="insertProduct" parameterType="com.charminseok.product.domain.ProductDomain">
         INSERT INTO PRODUCT
-        (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
-        VALUES
-        (#{companyName}, #{productName}, #{price}, #{stockCount})
+            (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
+        VALUES (#{companyName}, #{productName}, #{price}, #{stockCount})
     </insert>
 </mapper>
