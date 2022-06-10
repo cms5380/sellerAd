@@ -55,8 +55,8 @@ public class AdvertisementService {
         List<ResponseAdvertisement> items = new ArrayList<>();
         int validItemCount = 0;
         Set<Long> productNoStock = Collections.newSetFromMap(new ConcurrentHashMap<>());
-        for(int start = 0; start < advertisementTotalCount; start += pageSize){
-            List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList(start, pageSize);
+        for(int start = 0; start < advertisementTotalCount/pageSize + 1; start++){
+            List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList(start * pageSize, pageSize);
 
             for(ResponseAdvertisement adv : responseAdvertisements){
                 if(productNoStock.contains(adv.getProductId())){
