@@ -13,9 +13,11 @@ import java.util.List;
 public interface AdvertisementMapper {
     void insertAdvertisement(RequestAdvertisement requestAdvertisement);
 
-    List<ResponseAdvertisement> selectAdvertisementList();
+    List<ResponseAdvertisement> selectAdvertisementList(int start, int pageSize);
 
     void insertCPCTarget(Long advertisementId);
 
     AdvertisementDomain selectAdvertisementById(Long advertisementId);
+
+    Long getAdvertisementTotalCount();
 }

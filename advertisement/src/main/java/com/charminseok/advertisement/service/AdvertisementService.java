@@ -15,9 +15,9 @@ import com.charminseok.advertisement.openfeign.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +33,9 @@ public class AdvertisementService {
             throw new RuntimeException("입력한 회사가 없습니다.");
         }
 
-        ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId());
+        ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId(), RequestProduct.builder()
+                .productId(requestAdvertisement.getProductId())
+                .build());
         if(product == null){
             throw new RuntimeException("없는 상품입니다.");
         }
@@ -48,25 +50,45 @@ public class AdvertisementService {
     }
 
     public List<ResponseAdvertisement> getAdvertisementList(){
-        int stockCount = 0;
-        List<ResponseProduct> productList = productService.getProductList(stockCount);
-        List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList();
+        int pageSize = 100000;
+        Long advertisementTotalCount = advertisementMapper.getAdvertisementTotalCount();
+        List<ResponseAdvertisement> items = new ArrayList<>();
+        int validItemCount = 0;
+        Set<Long> productNoStock = Collections.newSetFromMap(new ConcurrentHashMap<>());
+        for(int start = 0; start < advertisementTotalCount; start += pageSize){
+            List<ResponseAdvertisement> responseAdvertisements = advertisementMapper.selectAdvertisementList(start, pageSize);
 
-        List<ResponseAdvertisement> collect = responseAdvertisements.stream()
-                .filter(ad -> productList.stream()
-                            .anyMatch(responseProduct -> {
-                                if(responseProduct.getProductId().equals(ad.getProductId())){
-                                    ad.setProductName(responseProduct.getProductName());
-                                    ad.setProductPrice(responseProduct.getPrice());
-                                    return true;
-                                }
-                                return false;
-                            }))
-                .sorted(Comparator.comparing(ResponseAdvertisement::getAdvertisementPrice, Comparator.reverseOrder()))
-                .limit(3)
-                .collect(Collectors.toList());
+            for(ResponseAdvertisement adv : responseAdvertisements){
+                if(productNoStock.contains(adv.getProductId())){
+                    continue;
+                }
 
-        return collect;
+                ResponseProduct productById = productService.getProductById(adv.getProductId(), RequestProduct.builder()
+                        .productId(adv.getProductId())
+                        .stockCount(1)
+                        .build());
+
+                if(productById == null) {
+                    productNoStock.add(adv.getProductId());
+                    continue;
+                }
+
+                adv.setProductName(productById.getProductName());
+                adv.setProductPrice(productById.getPrice());
+                items.add(adv);
+                validItemCount++;
+
+                if(validItemCount == 3){
+                    break;
+                }
+            }
+
+            if(validItemCount == 3){
+                break;
+            }
+        }
+
+        return items;
     }
 
     public AdvertisementDomain getAdvertisement(Long advertisementId){

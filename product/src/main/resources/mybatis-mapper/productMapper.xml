@@ -13,11 +13,14 @@
     </select>
 
     <select id="selectProductByProductId" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{productId};
+        SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{requestProduct.productId}
+        <if test="requestProduct != null and requestProduct.stockCount != null">
+            AND stock_count >= #{requestProduct.stockCount}
+        </if>;
     </select>
 
     <select id="selectProductList" parameterType="INT" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE stock_count > #{stockCount};
+        SELECT * FROM PRODUCT WHERE stock_count > #{stockCount} LIMIT #{start}, #{pageSize};
     </select>
 
     <insert id="insertProduct" parameterType="com.charminseok.product.domain.ProductDomain">

@@ -6,4 +6,5 @@ import lombok.Data;
 public class RequestProduct {
     private Long productId;
     private String productName;
+    private Integer stockCount;
 }

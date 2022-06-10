@@ -1,6 +1,7 @@
 package com.charminseok.product.controller;
 
 import com.charminseok.product.domain.ProductDomain;
+import com.charminseok.product.dto.RequestProduct;
 import com.charminseok.product.service.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,15 @@ public class ProductController {
     private final ProductServiceImpl productServiceImpl;
 
     @GetMapping("/products")
-    public ResponseEntity<?> getProducts(@RequestParam("stock-count") int stockCount){
-        List<ProductDomain> products = productServiceImpl.getProductList(stockCount);
+    public ResponseEntity<?> getProducts(@RequestParam("stock-count") int stockCount, @RequestParam("start") int start, @RequestParam("page-size") int pageSize){
+        List<ProductDomain> products = productServiceImpl.getProductList(stockCount, start, pageSize);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<?> getProduct(@PathVariable(value = "productId") Long productId){
-        ProductDomain product = productServiceImpl.getProductByProductId(productId);
+    public ResponseEntity<?> getProduct(@PathVariable(value = "productId") Long productId, @ModelAttribute RequestProduct requestProduct){
+        requestProduct.setProductId(productId);
+        ProductDomain product = productServiceImpl.getProductByProductId(requestProduct);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 

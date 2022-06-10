@@ -17,11 +17,13 @@
 
     <select id="selectAdvertisementList" resultMap="selectAdvertisementListMap">
         SELECT
-            ADVERTISEMENT.ADVERTISEMENT_ID
-            , ADVERTISEMENT.COMPANY_ID
-            , ADVERTISEMENT.PRODUCT_ID
-            , ADVERTISEMENT.ADVERTISEMENT_PRICE
+            ADVERTISEMENT_ID
+            , COMPANY_ID
+            , PRODUCT_ID
+            , ADVERTISEMENT_PRICE
         FROM ADVERTISEMENT
+        ORDER BY ADVERTISEMENT_PRICE DESC
+        LIMIT #{start}, #{pageSize};
     </select>
 
     <resultMap id="selectAdvertisementMap" type="com.charminseok.advertisement.domain.AdvertisementDomain">
@@ -36,4 +38,8 @@
         INSERT INTO CPC_TARGET (advertisement_id, CLICK_DATETIME)
         VALUES (#{advertisementId}, NOW())
     </insert>
+
+    <select id="getAdvertisementTotalCount" resultType="long">
+        SELECT COUNT(*) FROM ADVERTISEMENT;
+    </select>
 </mapper>
