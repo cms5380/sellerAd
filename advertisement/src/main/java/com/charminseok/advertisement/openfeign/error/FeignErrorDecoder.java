@@ -21,6 +21,18 @@ public class FeignErrorDecoder implements ErrorDecoder {
                 } else if (methodKey.contains("getProductList")) {
                     return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such product.");
                 }
+
+                if (methodKey.contains("getContractByCompanyId")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such contract.");
+                }
+
+                if (methodKey.contains("getProductById")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such product.");
+                }
+
+                if (methodKey.contains("getProductList")){
+                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such product.");
+                }
             default:
                 return new Exception(response.reason());
         }
