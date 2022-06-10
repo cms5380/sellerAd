@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.charminseok</groupId>
-    <artifactId>settlement</artifactId>
+    <artifactId>company-composite</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>settlement</name>
-    <description>settlement</description>
+    <name>company-composite</name>
+    <description>company-composite</description>
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
@@ -53,17 +53,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
     </dependencies>
     <dependencyManagement>

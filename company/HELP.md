@@ -8,7 +8,7 @@ For further reference, please consider the following sections:
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.0/maven-plugin/reference/html/)
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.0/maven-plugin/reference/html/#build-image)
 * [MyBatis Framework](https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
-* [Spring Data JDBC](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#data.sql.jdbc)
+* [Spring Data JDBC](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#schema.sql.jdbc)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#using.devtools)
 * [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#web)
 
