@@ -39,53 +39,6 @@ public class JobConfig {
     private final ShareDataBean<List<SettlementDomain>> shareDataBean;
     private final SqlSessionFactory sqlSessionFactory;
 
-    //    @Bean
-//    public Job conditionalStepFlowJob() {
-//        return jobBuilderFactory.get("settlementJob")
-//                .start(cpcStep())
-//                .on("FAILED")
-//                .end()
-//
-//                .from(cpcStep())
-//                .on("COMPLETED")
-//                .to(productStep())
-//                .on("FAILED")
-//                .end()
-//
-//                .from(cpcStep())
-//                .on("COMPLETED")
-//                .to(productStep())
-//                .on("*")
-//                .end()
-//                .end()
-//                .build();
-//    }
-//
-//    @Bean
-//    protected Step cpcStep() {
-//        return stepBuilderFactory.get("cpcStep")
-//                .tasklet(cpcTasklet())
-//                .build();
-//    }
-//
-//    @Bean
-//    protected Step productStep() {
-//        return stepBuilderFactory.get("productStep")
-//                .tasklet(productTasklet())
-//                .build();
-//    }
-//
-//
-//    @Bean
-//    public Tasklet cpcTasklet() {
-//        return new CPCTasklet(advertisementService, shareDataBean);
-//    }
-//
-//    @Bean
-//    public Tasklet productTasklet() {
-//        return new ProductTasklet(productService, shareDataBean, settlementMapper);
-//    }
-
     @Bean
     public Job settlementJob() {
         return jobBuilderFactory.get("settlementJob")
