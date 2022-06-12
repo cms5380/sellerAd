@@ -1,7 +1,6 @@
 package com.charminseok.advertisement.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /*
 광고입찰
@@ -10,8 +9,11 @@ import lombok.Setter;
 3) 입력된 상품 ID 가 광고입찰한 업체가 등록한 상품 ID 인지 Validation
 4) 최대 광고입찰가는 1,000,000 원으로 제한
  */
-@Setter
-@Getter
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdvertisementDomain {
     private Long advertisementId;
     private Long companyId;

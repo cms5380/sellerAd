@@ -16,8 +16,9 @@
     <select id="selectContractByStartDate" resultMap="contract">
         SELECT CONTRACT.COMPANY_ID
              , CONTRACT.CONTRACT_START_DATE
+             , CONTRACT.CONTRACT_END_DATE
         FROM CONTRACT
-        INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
+                 INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
         WHERE CONTRACT.COMPANY_ID = #{companyId}
           AND CONTRACT.CONTRACT_END_DATE BETWEEN NOW() AND TIMESTAMPADD(YEAR, 1, NOW())
     </select>
@@ -31,6 +32,9 @@
     </select>
 
     <select id="selectContractByCompanyId" resultMap="contract">
-        SELECT * FROM CONTRACT WHERE COMPANY_ID = #{companyId} ORDER BY CONTRACT_START_DATE DESC LIMIT 1;
+        SELECT *
+        FROM CONTRACT
+        WHERE COMPANY_ID = #{companyId}
+        ORDER BY CONTRACT_START_DATE DESC LIMIT 1;
     </select>
 </mapper>

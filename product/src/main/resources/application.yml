@@ -23,17 +23,30 @@ spring:
   application:
     name: product
 
+  cloud:
+    stream:
+      function:
+        definition: productUpdate;
+      bindings:
+        productUpdate-out-0:
+          destination: product-update-topic
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: localhost:9091
+          zkNodes: localhost:2181
 
-# model ???? camel case ??
+
 mybatis:
   mapper-locations: mybatis-mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
-# mapper ???? ??
 logging:
   level:
     com:
       charminseok: debug
 
-
+springdoc:
+  api-docs:
+    path: /openapi/${spring.application.name}

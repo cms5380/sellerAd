@@ -5,8 +5,7 @@
 
 <mapper namespace="com.charminseok.advertisement.mapper.AdvertisementMapper">
 
-
-    <insert id="insertAdvertisement" parameterType="com.charminseok.advertisement.dto.RequestAdvertisement">
+    <insert id="insertAdvertisement" keyProperty="advertisementId" keyColumn="ADVERTISEMENT_ID" useGeneratedKeys="true" parameterType="com.charminseok.advertisement.domain.AdvertisementDomain">
         INSERT INTO Advertisement (company_id, product_id, advertisement_price)
         values (#{companyId}, #{productId}, #{advertisementPrice});
     </insert>
@@ -16,24 +15,57 @@
     </resultMap>
 
     <select id="selectAdvertisementList" resultMap="selectAdvertisementListMap">
-        SELECT
-            ADVERTISEMENT.ADVERTISEMENT_ID
-            , ADVERTISEMENT.COMPANY_ID
-            , ADVERTISEMENT.PRODUCT_ID
-            , ADVERTISEMENT.ADVERTISEMENT_PRICE
+        SELECT ADVERTISEMENT_ID
+             , COMPANY_ID
+             , PRODUCT_ID
+             , ADVERTISEMENT_PRICE
         FROM ADVERTISEMENT
+        ORDER BY ADVERTISEMENT_PRICE DESC
+            LIMIT #{start}, #{pageSize};
     </select>
 
     <resultMap id="selectAdvertisementMap" type="com.charminseok.advertisement.domain.AdvertisementDomain">
         <id column="ADVERTISEMENT_ID" property="advertisementId"/>
     </resultMap>
 
-    <select id="selectAdvertisementById" resultMap="selectAdvertisementMap">
-        SELECT * FROM Advertisement WHERE advertisement_id = #{advertisementId}
-    </select>
-
-    <insert id="insertCPCTarget" parameterType="long">
+    <insert id="insertCPCTarget" keyProperty="cpcId" keyColumn="CPC_ID" useGeneratedKeys="true" parameterType="com.charminseok.advertisement.domain.CPCTargetDomain">
         INSERT INTO CPC_TARGET (advertisement_id, CLICK_DATETIME)
         VALUES (#{advertisementId}, NOW())
     </insert>
+
+    <select id="getAdvertisementTotalCount" resultType="long">
+        SELECT COUNT(*)
+        FROM ADVERTISEMENT;
+    </select>
+
+    <select id="selectAdvertisement">
+        SELECT *
+        FROM ADVERTISEMENT
+        WHERE ADVERTISEMENT_ID = #{advertisementId}
+        <choose>
+            <when test="requestAdvertisement.companyId != null">
+                AND COMPANY_ID = #{requestAdvertisement.companyId}
+            </when>
+            <when test="requestAdvertisement.productId">
+                AND PRODUCT_ID = #{requestAdvertisement.productId}
+            </when>
+        </choose>
+    </select>
+
+    <resultMap id="selectCPCCountListMap" type="com.charminseok.advertisement.dto.CPCCountResponseDto">
+        <id column="ADVERTISEMENT_ID" property="advertisementId"/>
+    </resultMap>
+
+    <select id="selectCPCCountList" parameterType="com.charminseok.advertisement.dto.CPCCountRequestDto"
+            resultMap="selectCPCCountListMap">
+        SELECT CPC_TARGET.ADVERTISEMENT_ID
+             , COUNT(CPC_TARGET.ADVERTISEMENT_ID) AS CLICK_COUNT
+             , ADVERTISEMENT.COMPANY_ID
+             , ADVERTISEMENT.PRODUCT_ID
+             , ADVERTISEMENT.ADVERTISEMENT_PRICE
+        FROM CPC_TARGET
+                 INNER JOIN ADVERTISEMENT ON ADVERTISEMENT.ADVERTISEMENT_ID = CPC_TARGET.ADVERTISEMENT_ID
+        WHERE CPC_TARGET.CLICK_DATETIME BETWEEN #{startDate} AND #{endDate}
+        GROUP BY CPC_TARGET.ADVERTISEMENT_ID;
+    </select>
 </mapper>

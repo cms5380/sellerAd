@@ -1,17 +1,25 @@
 package com.charminseok.product.mapper;
 
 import com.charminseok.product.domain.ProductDomain;
+import com.charminseok.product.dto.ProductCreateDto;
+import com.charminseok.product.dto.Paging;
+import com.charminseok.product.dto.RequestProduct;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    ProductDomain selectProductByCompanyName(String companyName);
+    List<ProductDomain> selectProductList(
+            @Param("requestProduct") RequestProduct requestProduct,
+            @Param("requestPaging") Paging paging);
 
-    ProductDomain selectProductByProductId(Long productId);
+    void insertProduct(ProductCreateDto productCreateDto);
 
-    List<ProductDomain> selectProductList(int stockCount);
+    ProductDomain selectProduct(
+            @Param("productDomain") ProductDomain productDomain
+    );
 
-    void insertProduct(ProductDomain productDomain);
+    int updateProduct(ProductDomain productDomain);
 }

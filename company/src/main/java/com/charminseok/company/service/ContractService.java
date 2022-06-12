@@ -8,6 +8,7 @@ import com.charminseok.company.dto.RequestContract;
 import com.charminseok.company.mapper.ContractMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,7 +32,11 @@ public class ContractService {
                 .contractStartDate(LocalDate.now())
                 .contractEndDate(LocalDate.now().plusYears(1L)).build();
 
-        contractMapper.insertContract(contractDTO);
+        try {
+            contractMapper.insertContract(contractDTO);
+        } catch (DataIntegrityViolationException exception){
+            log.error("없는 회사입니다.");
+        }
     }
 
     public List<ContractDomain> getContractList() {

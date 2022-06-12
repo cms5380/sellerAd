@@ -9,16 +9,39 @@
     </resultMap>
 
     <select id="selectCompanyByCompanyId" resultMap="companyMap">
-        SELECT * FROM Company WHERE COMPANY_ID = #{companyId}
+        SELECT *
+        FROM Company
+        WHERE COMPANY_ID = #{companyId}
     </select>
 
     <select id="selectCompanyByCompanyName" resultMap="companyMap">
-        SELECT * FROM Company WHERE COMPANY_NAME = #{companyName}
+        SELECT *
+        FROM Company
+        WHERE COMPANY_NAME = #{companyName}
     </select>
 
-    <insert id="insertCompany" parameterType="com.charminseok.company.dto.CompanyDTO">
+    <insert id="insertCompany" keyProperty="companyId" keyColumn="COMPANY_ID" useGeneratedKeys="true" parameterType="com.charminseok.company.dto.CompanyInsertDto">
         INSERT INTO Company (company_name, company_business_number, company_tel, company_address)
-        values (#{company.companyName}, #{company.companyBusinessNumber}, #{company.companyTel}, #{company.companyAddress});
+        values ( #{companyName}
+               , #{companyBusinessNumber}
+               , #{companyTel}
+               , #{companyAddress});
     </insert>
 
+    <update id="updateCompany" parameterType="com.charminseok.company.domain.CompanyDomain">
+        UPDATE COMPANY
+        SET
+        <trim prefixOverrides=",">
+            <if test="companyBusinessNumber">
+                , COMPANY_BUSINESS_NUMBER = #{companyBusinessNumber}
+            </if>
+            <if test="companyTel">
+                , COMPANY_TEL = #{companyTel}
+            </if>
+            <if test="companyAddress">
+                , COMPANY_ADDRESS = #{companyAddress}
+            </if>
+        </trim>
+        WHERE COMPANY_ID = #{companyId}
+    </update>
 </mapper>

@@ -8,22 +8,75 @@
         <id column="product_id" property="productId"/>
     </resultMap>
 
-    <select id="selectProductByCompanyName" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE company_name = #{companyName} LIMIT 1;
+    <select id="selectProduct" resultMap="Product">
+        SELECT * FROM PRODUCT
+        <where>
+            <if test="productDomain.productId != null">
+                AND PRODUCT_ID = #{productDomain.productId}
+            </if>
+            <if test="productDomain.productName != null">
+                AND PRODUCT_NAME = #{productDomain.productName}
+            </if>
+            <if test="productDomain.stockCount != null">
+                AND STOCK_COUNT >= #{productDomain.stockCount}
+            </if>
+            <if test="productDomain.companyName != null">
+                AND COMPANY_NAME = #{productDomain.companyName}
+            </if>
+        </where>
+        LIMIT 1;
     </select>
 
-    <select id="selectProductByProductId" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{productId};
+    <select id="selectProductList" resultMap="Product">
+        SELECT *
+        FROM PRODUCT
+        <where>
+            <if test="productDto.productId != null">
+                AND PRODUCT_ID = #{productDto.productId}
+            </if>
+            <if test="productDto.productName != null">
+                AND PRODUCT_NAME = #{productDto.productName}
+            </if>
+            <if test="productDto.stockCount != null">
+                AND STOCK_COUNT >= #{productDto.stockCount}
+            </if>
+        </where>
+        LIMIT
+        <if test="paging.start != null">
+            #{start},
+        </if>
+        <if test="paging.pageSize != null">
+            #{pageSize};
+        </if>
+        <if test="paging.pageSize == null">
+            1000;
+        </if>
+
     </select>
 
-    <select id="selectProductList" parameterType="INT" resultMap="Product">
-        SELECT * FROM PRODUCT WHERE stock_count > #{stockCount};
-    </select>
-
-    <insert id="insertProduct" parameterType="com.charminseok.product.domain.ProductDomain">
+    <insert id="insertProduct" parameterType="com.charminseok.product.dto.ProductCreateDto">
         INSERT INTO PRODUCT
-        (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
-        VALUES
-        (#{companyName}, #{productName}, #{price}, #{stockCount})
+            (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
+        VALUES (#{companyName}, #{productName}, #{price}, #{stockCount})
     </insert>
+
+    <update id="updateProduct" parameterType="com.charminseok.product.domain.ProductDomain">
+        UPDATE PRODUCT
+        SET
+        <trim prefixOverrides=",">
+            <if test="companyName != null">
+                , COMPANY_NAME = #{companyName}
+            </if>
+            <if test="productName != null">
+                , PRODUCT_NAME = #{productName}
+            </if>
+            <if test="price != null">
+                , PRICE = #{price}
+            </if>
+            <if test="stockCount != null">
+                , STOCK_COUNT = #{stockCount}
+            </if>
+        </trim>
+        WHERE PRODUCT_ID = #{productId}
+    </update>
 </mapper>

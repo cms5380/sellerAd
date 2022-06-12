@@ -1,8 +1,6 @@
 package com.charminseok.company.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /*
 업체생성
@@ -13,6 +11,9 @@ import lombok.Setter;
 3) 사업자번호, 업체전화번호 등의 Data 셋팅 시 자릿수, 숫자여부만 Validation
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CompanyDomain {
     private Long companyId;
     private String companyName;
