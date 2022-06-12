@@ -1,18 +1,20 @@
 package com.charminseok.product.service;
 
 import com.charminseok.product.domain.ProductDomain;
-import com.charminseok.product.dto.RequestPaging;
+import com.charminseok.product.dto.ProductCreateDto;
+import com.charminseok.product.dto.ProductUpdateDto;
+import com.charminseok.product.dto.Paging;
 import com.charminseok.product.dto.RequestProduct;
 
 import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDomain> getProductList(RequestProduct requestProduct, RequestPaging requestPaging);
+    List<ProductDomain> getProductList(RequestProduct requestProduct, Paging paging);
 
-    void setProduct(ProductDomain productDomain);
+    void setProduct(ProductCreateDto productCreateDto);
 
-    ProductDomain getProductByProductId(RequestProduct requestProduct);
+    ProductDomain getProduct(Long productId, RequestProduct requestProduct);
 
-    ProductDomain getProduct(RequestProduct requestProduct);
+    ProductDomain updateProduct(Long productId, ProductUpdateDto productUpdateDto);
 }

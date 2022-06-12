@@ -1,10 +1,32 @@
+server:
+  port: 8080
+  shutdown: graceful
 
 spring:
   application:
     name: seller-ad-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ${spring.application.name}
+          uri: lb://${spring.application.name}
+          predicates:
+            - Path=/openapi/${spring.application.name}
+          filters:
+            - RewritePath=/openapi/${spring.application.name}, /openapi
+        - id: product
+          uri: lb://product
+          predicates:
+            - Path=/product/**, /products, /openapi/product
+        - id: company
+          uri: lb://company
+          predicates:
+            - Path=/company/**, /companies, /openapi/company, /contract/**, /contracts
+        - id: advertisement
+          uri: lb://advertisement
+          predicates:
+            - Path=/advertisement/**, /advertisements, /openapi/advertisement
 
-server:
-  port: 8080
 
 eureka:
   instance:
@@ -19,3 +41,7 @@ logging:
   level:
     com:
       charminseok: debug
+
+springdoc:
+  api-docs:
+    path: /openapi

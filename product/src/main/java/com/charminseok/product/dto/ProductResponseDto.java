@@ -1,16 +1,18 @@
-package com.charminseok.advertisement.openfeign.product.dto;
+package com.charminseok.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestProduct {
+public class ProductResponseDto {
     private Long productId;
     private String companyName;
+    private String productName;
+    private Integer price;
     private Integer stockCount;
 }

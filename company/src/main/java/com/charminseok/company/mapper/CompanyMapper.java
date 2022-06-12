@@ -1,17 +1,18 @@
 package com.charminseok.company.mapper;
 
 import com.charminseok.company.domain.CompanyDomain;
-import com.charminseok.company.dto.CompanyDTO;
+import com.charminseok.company.dto.CompanyInsertDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface CompanyMapper {
     int insertCompany(
-            @Param("company") CompanyDTO companyDTO
+            CompanyInsertDto companyInsertDto
     );
 
     CompanyDomain selectCompanyByCompanyId(Long companyId);
 
     CompanyDomain selectCompanyByCompanyName(String companyName);
+
+    void updateCompany(CompanyDomain companyDomain);
 }

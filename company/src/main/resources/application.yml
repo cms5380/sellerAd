@@ -16,6 +16,17 @@ spring:
   application:
     name: company
 
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9091
+          zkNodes: localhost:2181
+      function:
+        definition: productCompany;
+      bindings:
+        productCompany-in-0:
+          destination: product-company-topic
 
 # model ???? camel case ??
 mybatis:
@@ -36,3 +47,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8081/eureka
+
+springdoc:
+  api-docs:
+    path: /openapi/${spring.application.name}

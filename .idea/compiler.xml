@@ -9,12 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="product" />
         <module name="sellerAdDiscoveryServer" />
-        <module name="company-composite" />
         <module name="advertisement" />
         <module name="company" />
         <module name="sellerAdApiGateway" />
-        <module name="product" />
-        <module name="sellerAdDiscoveryServer" />
         <module name="settlement" />
       </profile>
     </annotationProcessing>

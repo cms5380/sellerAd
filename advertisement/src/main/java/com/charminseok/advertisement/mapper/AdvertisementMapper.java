@@ -2,22 +2,28 @@ package com.charminseok.advertisement.mapper;
 
 
 import com.charminseok.advertisement.domain.AdvertisementDomain;
-import com.charminseok.advertisement.dto.RequestAdvertisement;
-import com.charminseok.advertisement.dto.ResponseAdvertisement;
-import com.charminseok.advertisement.dto.CPCTargetDTO;
+import com.charminseok.advertisement.domain.CPCTargetDomain;
+import com.charminseok.advertisement.dto.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface AdvertisementMapper {
-    void insertAdvertisement(RequestAdvertisement requestAdvertisement);
+    int insertAdvertisement(AdvertisementDomain advertisementDomain);
 
     List<ResponseAdvertisement> selectAdvertisementList(int start, int pageSize);
 
-    void insertCPCTarget(Long advertisementId);
-
-    AdvertisementDomain selectAdvertisementById(Long advertisementId);
+    int insertCPCTarget(CPCTargetDomain cpcTargetDomain);
 
     Long getAdvertisementTotalCount();
+
+    AdvertisementDomain selectAdvertisement(
+            @Param("advertisementId") Long advertisementId,
+            @Param("requestAdvertisement") RequestAdvertisement requestAdvertisement
+    );
+
+
+    List<CPCCountResponseDto> selectCPCCountList(CPCCountRequestDto cpcCountRequestDto);
 }

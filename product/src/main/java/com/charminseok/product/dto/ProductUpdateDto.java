@@ -1,16 +1,15 @@
-package com.charminseok.product.domain;
+package com.charminseok.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class ProductDomain {
-    private Long productId;
+public class ProductUpdateDto {
     private String companyName;
     private String productName;
     private Integer price;
