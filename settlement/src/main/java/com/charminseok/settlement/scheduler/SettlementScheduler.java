@@ -20,7 +20,6 @@ public class SettlementScheduler {
     private final JobLauncher jobLauncher;
 
     @Scheduled(cron = "0 10 0 * * ?", zone = "Asia/Seoul")
-//    @Scheduled(fixedDelay = 60 * 1000L)
     public void executeJob() {
         JobExecution execution;
         try {

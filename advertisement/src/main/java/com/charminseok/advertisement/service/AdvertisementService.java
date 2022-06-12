@@ -15,7 +15,6 @@ import com.charminseok.advertisement.openfeign.product.cache.ProductCacheService
 import com.charminseok.advertisement.openfeign.product.dto.ProductDto;
 import com.charminseok.advertisement.openfeign.product.dto.ResponseProduct;
 import com.charminseok.advertisement.openfeign.product.service.ProductService;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,42 +31,37 @@ public class AdvertisementService {
     private final ProductCacheService productCacheService;
 
     public AdvertisementDomain insertAdvertisement(RequestAdvertisement requestAdvertisement) {
-        try {
-            ResponseCompany companyById = companyService.getCompanyById(requestAdvertisement.getCompanyId());
-            if (companyById == null) {
-                throw new RuntimeException("입력한 회사가 없습니다.");
-            }
+        ResponseCompany companyById = companyService.getCompanyById(requestAdvertisement.getCompanyId());
+        if (companyById == null) {
+            throw new RuntimeException("입력한 회사가 없습니다.");
+        }
 
 
-            ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
-            if (!contractByCompanyId.isValidContract()) {
-                throw new RuntimeException("계약이 올바르지 않습니다.");
-            }
+        ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
+        if (!contractByCompanyId.isValidContract()) {
+            throw new RuntimeException("계약이 올바르지 않습니다.");
+        }
 
-            ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId(), ProductDto.builder()
-                    .productId(requestAdvertisement.getProductId())
-                    .companyName(companyById.getCompanyName())
-                    .build());
-            if (product == null) {
-                throw new RuntimeException("없는 상품입니다.");
-            }
+        ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId(), ProductDto.builder()
+                .productId(requestAdvertisement.getProductId())
+                .companyName(companyById.getCompanyName())
+                .build());
+        if (product == null) {
+            throw new RuntimeException("없는 상품입니다.");
+        }
 
-            AdvertisementDomain advertisementDomain = AdvertisementDomain.builder()
-                    .companyId(requestAdvertisement.getCompanyId())
-                    .productId(requestAdvertisement.getProductId())
-                    .advertisementPrice(requestAdvertisement.getAdvertisementPrice())
-                    .build();
+        AdvertisementDomain advertisementDomain = AdvertisementDomain.builder()
+                .companyId(requestAdvertisement.getCompanyId())
+                .productId(requestAdvertisement.getProductId())
+                .advertisementPrice(requestAdvertisement.getAdvertisementPrice())
+                .build();
 
-            if(advertisementMapper.insertAdvertisement(advertisementDomain) == 1){
-                return advertisementDomain;
-            } else {
-                return new AdvertisementDomain();
-            }
-
-        } catch (FeignException ex) {
-            log.error(ex.getMessage());
+        if (advertisementMapper.insertAdvertisement(advertisementDomain) == 1) {
+            return advertisementDomain;
+        } else {
             return new AdvertisementDomain();
         }
+
     }
 
     public List<ResponseAdvertisement> selectAdvertisementTop3List() {
@@ -108,7 +102,7 @@ public class AdvertisementService {
                 .advertisementId(advertisementId)
                 .build();
 
-        if(advertisementMapper.insertCPCTarget(cpcTargetDomain) == 1){
+        if (advertisementMapper.insertCPCTarget(cpcTargetDomain) == 1) {
             return cpcTargetDomain;
         } else {
             return new CPCTargetDomain();
