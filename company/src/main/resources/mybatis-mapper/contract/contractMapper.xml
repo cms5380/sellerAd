@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.charminseok.company.mapper.ContractMapper">
-    <insert id="insertContract" parameterType="com.charminseok.company.dto.ContractDTO">
+    <insert id="insertContract" keyProperty="contractId" keyColumn="CONTRACT_ID" useGeneratedKeys="true" parameterType="com.charminseok.company.domain.ContractDomain">
         INSERT INTO Contract (COMPANY_ID, CONTRACT_START_DATE, CONTRACT_END_DATE)
-        VALUES (#{Contract.companyId}, #{Contract.contractStartDate}, #{Contract.contractEndDate})
+        VALUES (#{companyId}, #{contractStartDate}, #{contractEndDate})
     </insert>
 
     <resultMap id="contract" type="com.charminseok.company.domain.ContractDomain">
@@ -32,9 +32,10 @@
     </select>
 
     <select id="selectContractByCompanyId" resultMap="contract">
-        SELECT *
+        SELECT CONTRACT.*
         FROM CONTRACT
-        WHERE COMPANY_ID = #{companyId}
-        ORDER BY CONTRACT_START_DATE DESC LIMIT 1;
+        INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
+        WHERE CONTRACT.COMPANY_ID = #{companyId}
+        ORDER BY CONTRACT.CONTRACT_START_DATE DESC LIMIT 1;
     </select>
 </mapper>

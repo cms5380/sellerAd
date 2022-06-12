@@ -22,4 +22,6 @@ public interface ProductMapper {
     );
 
     int updateProduct(ProductDomain productDomain);
+
+    ProductDomain selectProductByCompanyName(String companyName);
 }

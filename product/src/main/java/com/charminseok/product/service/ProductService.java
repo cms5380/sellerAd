@@ -12,9 +12,11 @@ public interface ProductService {
 
     List<ProductDomain> getProductList(RequestProduct requestProduct, Paging paging);
 
-    void setProduct(ProductCreateDto productCreateDto);
+    void insertProduct(ProductCreateDto productCreateDto);
 
     ProductDomain getProduct(Long productId, RequestProduct requestProduct);
+
+    ProductDomain getProductByCompanyName(String companyName);
 
     ProductDomain updateProduct(Long productId, ProductUpdateDto productUpdateDto);
 }

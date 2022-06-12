@@ -1,8 +1,11 @@
 package com.charminseok.company.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /*
 계약생성
@@ -12,9 +15,12 @@ import java.time.LocalDateTime;
 4) 업체별 계약기간이 중복되지 않도록 Validation
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ContractDomain {
     private Long contractId;
     private Long companyId;
-    private LocalDateTime contractStartDate;
-    private LocalDateTime contractEndDate;
+    private LocalDate contractStartDate;
+    private LocalDate contractEndDate;
 }

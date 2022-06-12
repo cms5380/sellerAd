@@ -27,6 +27,13 @@
         LIMIT 1;
     </select>
 
+    <select id="selectProductByCompanyName" resultMap="Product">
+        SELECT *
+        FROM PRODUCT
+        WHERE COMPANY_NAME = #{companyName}
+        LIMIT 1;
+    </select>
+
     <select id="selectProductList" resultMap="Product">
         SELECT *
         FROM PRODUCT

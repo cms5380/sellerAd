@@ -24,16 +24,22 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping({"/product/{productId}", "/product"})
-    public ResponseEntity<?> getProduct(@PathVariable(value = "productId", required = false) Long productId, @ModelAttribute RequestProduct requestProduct){
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<?> getProduct(@PathVariable(value = "productId") Long productId, @ModelAttribute RequestProduct requestProduct){
         ProductDomain product = productServiceImpl.getProduct(productId, requestProduct);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<?> getProduct(@RequestParam String companyName){
+        ProductDomain product = productServiceImpl.getProductByCompanyName(companyName);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 
     @PostMapping("/product")
     public ResponseEntity<?> setProduct(@RequestBody ProductCreateDto productCreateDto){
-        productServiceImpl.setProduct(productCreateDto);
+        productServiceImpl.insertProduct(productCreateDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -31,28 +31,17 @@ public class AdvertisementService {
     private final ProductCacheService productCacheService;
 
     public AdvertisementDomain insertAdvertisement(RequestAdvertisement requestAdvertisement) {
-        ResponseCompany companyById = companyService.getCompanyById(requestAdvertisement.getCompanyId());
-        if (companyById == null) {
-            throw new RuntimeException("입력한 회사가 없습니다.");
-        }
-
-
-        ResponseContract contractByCompanyId = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
-        if (!contractByCompanyId.isValidContract()) {
-            throw new RuntimeException("계약이 올바르지 않습니다.");
-        }
+        ResponseCompany company = companyService.getCompanyById(requestAdvertisement.getCompanyId());
+        ResponseContract contract = companyService.getContractByCompanyId(requestAdvertisement.getCompanyId());
 
         ResponseProduct product = productService.getProductById(requestAdvertisement.getProductId(), ProductDto.builder()
                 .productId(requestAdvertisement.getProductId())
-                .companyName(companyById.getCompanyName())
+                .companyName(company.getCompanyName())
                 .build());
-        if (product == null) {
-            throw new RuntimeException("없는 상품입니다.");
-        }
 
         AdvertisementDomain advertisementDomain = AdvertisementDomain.builder()
-                .companyId(requestAdvertisement.getCompanyId())
-                .productId(requestAdvertisement.getProductId())
+                .companyId(company.getCompanyId())
+                .productId(product.getProductId())
                 .advertisementPrice(requestAdvertisement.getAdvertisementPrice())
                 .build();
 

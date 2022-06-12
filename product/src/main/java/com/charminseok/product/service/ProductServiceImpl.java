@@ -5,6 +5,8 @@ import com.charminseok.product.dto.ProductCreateDto;
 import com.charminseok.product.dto.ProductUpdateDto;
 import com.charminseok.product.dto.Paging;
 import com.charminseok.product.dto.RequestProduct;
+import com.charminseok.product.error.ProductErrorCode;
+import com.charminseok.product.error.ProductException;
 import com.charminseok.product.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,23 +24,38 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDomain> getProductList(RequestProduct requestProduct, Paging paging) {
-        List<ProductDomain> productDomains = productMapper.selectProductList(requestProduct, paging);
-        return productDomains;
+        return productMapper.selectProductList(requestProduct, paging);
     }
 
     @Override
-    public void setProduct(ProductCreateDto productCreateDto) {
+    public void insertProduct(ProductCreateDto productCreateDto) {
         productMapper.insertProduct(productCreateDto);
     }
 
     @Override
     public ProductDomain getProduct(Long productId, RequestProduct requestProduct) {
-        return productMapper.selectProduct(ProductDomain.builder()
+        ProductDomain product = ProductDomain.builder()
                 .productId(productId)
                 .productName(requestProduct.getProductName())
                 .companyName(requestProduct.getCompanyName())
                 .stockCount(requestProduct.getStockCount())
-                .build());
+                .build();
+        product = productMapper.selectProduct(product);
+        if(product == null){
+            throw new ProductException(ProductErrorCode.NO_SUCH_PRODUCT);
+        }
+
+        return product;
+    }
+
+    @Override
+    public ProductDomain getProductByCompanyName(String companyName) {
+        ProductDomain product = productMapper.selectProductByCompanyName(companyName);
+        if(product == null){
+            throw new ProductException(ProductErrorCode.NOT_EXISTS_COMPANY);
+        }
+
+        return product;
     }
 
     @Override

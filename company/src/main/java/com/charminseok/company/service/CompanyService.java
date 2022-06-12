@@ -2,6 +2,8 @@ package com.charminseok.company.service;
 
 import com.charminseok.company.dto.CompanyInsertDto;
 import com.charminseok.company.dto.CompanyUpdateDto;
+import com.charminseok.company.error.CompanyErrorCode;
+import com.charminseok.company.error.CompanyException;
 import com.charminseok.company.openfeign.client.ProductService;
 import com.charminseok.company.domain.CompanyDomain;
 import com.charminseok.company.dto.ResponseProduct;
@@ -16,20 +18,20 @@ import org.springframework.stereotype.Service;
 public class CompanyService {
     private final CompanyMapper companyMapper;
     private final ProductService productService;
-    private final StreamBridge streamBridge;
-
-    public CompanyDomain selectCompanyByCompanyId(Long companyId) {
-        return companyMapper.selectCompanyByCompanyId(companyId);
-    }
 
     public CompanyDomain selectCompanyByCompanyName(String companyName) {
-        return companyMapper.selectCompanyByCompanyName(companyName);
+        CompanyDomain companyDomain = companyMapper.selectCompanyByCompanyName(companyName);
+        if(companyDomain == null){
+            throw new CompanyException(CompanyErrorCode.NO_SUCH_COMPANY);
+        }
+
+        return companyDomain;
     }
 
-    public CompanyDomain registerCompany(CompanyInsertDto companyInsertDto) throws Exception {
-        ResponseProduct product = productService.getProductByCompanyName(new ProductDto(companyInsertDto.getCompanyName()));
+    public CompanyDomain registerCompany(CompanyInsertDto companyInsertDto) {
+        ResponseProduct product = productService.getProductByCompanyName(companyInsertDto.getCompanyName());
         if(product == null){
-            throw new Exception("no such company.");
+            throw new CompanyException(CompanyErrorCode.NO_SUCH_COMPANY);
         }
 
         companyMapper.insertCompany(companyInsertDto);
@@ -44,7 +46,12 @@ public class CompanyService {
     }
 
     public CompanyDomain selectCompanyById(Long companyId) {
-        return companyMapper.selectCompanyByCompanyId(companyId);
+        CompanyDomain companyDomain = companyMapper.selectCompanyByCompanyId(companyId);
+        if(companyDomain == null){
+            throw new CompanyException(CompanyErrorCode.NO_SUCH_COMPANY);
+        }
+
+        return companyDomain;
     }
 
     public CompanyDomain updateCompany(Long companyId, CompanyUpdateDto companyUpdateDto) {

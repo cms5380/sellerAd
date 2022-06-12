@@ -1,14 +1,13 @@
 package com.charminseok.company.service;
 
 
-import com.charminseok.company.domain.CompanyDomain;
 import com.charminseok.company.domain.ContractDomain;
-import com.charminseok.company.dto.ContractDTO;
-import com.charminseok.company.dto.RequestContract;
+import com.charminseok.company.dto.ContractInsertDto;
+import com.charminseok.company.error.CompanyErrorCode;
+import com.charminseok.company.error.CompanyException;
 import com.charminseok.company.mapper.ContractMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,22 +19,25 @@ import java.util.List;
 public class ContractService {
     private final ContractMapper contractMapper;
 
-    public void registerContract(RequestContract requestContract) {
-        ContractDomain contractDomain = contractMapper.selectContractByStartDate(requestContract.getCompanyId());
-
+    public ContractDomain registerContract(ContractInsertDto contractInsertDto) {
+        ContractDomain contractDomain = contractMapper.selectContractByStartDate(contractInsertDto.getCompanyId());
         if(contractDomain != null){
-            throw new RuntimeException("해당 날짜에 이미 계약이 있습니다.");
+            throw new CompanyException(CompanyErrorCode.ALREADY_EXISTS_CONTRACT);
         }
 
-        ContractDTO contractDTO = ContractDTO.builder()
-                .companyId(requestContract.getCompanyId())
+        contractDomain = ContractDomain.builder()
+                .companyId(contractInsertDto.getCompanyId())
                 .contractStartDate(LocalDate.now())
                 .contractEndDate(LocalDate.now().plusYears(1L)).build();
 
         try {
-            contractMapper.insertContract(contractDTO);
-        } catch (DataIntegrityViolationException exception){
-            log.error("없는 회사입니다.");
+            if(contractMapper.insertContract(contractDomain) == 1){
+                return contractDomain;
+            } else {
+                return new ContractDomain();
+            }
+        } catch (Exception exception){
+            throw new CompanyException(CompanyErrorCode.NO_SUCH_COMPANY);
         }
     }
 
@@ -44,6 +46,16 @@ public class ContractService {
     }
 
     public ContractDomain getContractByCompanyId(Long companyId) {
-        return contractMapper.selectContractByCompanyId(companyId);
+
+        ContractDomain contractDomain = contractMapper.selectContractByCompanyId(companyId);
+        if(contractDomain == null){
+            throw new CompanyException(CompanyErrorCode.NOT_EXISTS_COMPANY_OR_CONTRACT);
+        }
+
+        if(contractDomain.getContractEndDate().isBefore(LocalDate.now())){
+            throw new CompanyException(CompanyErrorCode.EXPIRED_CONTRACT);
+        }
+
+        return contractDomain;
     }
 }
