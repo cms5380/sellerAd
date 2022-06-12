@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.charminseok.settlement.mapper.SettlementMapper">
+    <insert id="insertSettlement">
+        INSERT INTO Settlement
+        ( CLICK_DATE
+        , COMPANY_ID
+        , COMPANY_NAME
+        , ADVERTISEMENT_ID
+        , PRODUCT_ID
+        , PRODUCT_NAME
+        , CLICK_COUNT
+        , TOTAL_BILL_AMOUNT)
+        VALUES ( #{clickDate}
+               , #{companyId}
+               , #{companyName}
+               , #{advertisementId}
+               , #{productId}
+               , #{productName}
+               , #{clickCount}
+               , #{totalBillAmount})
+    </insert>
+</mapper>

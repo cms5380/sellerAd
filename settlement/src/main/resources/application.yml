@@ -1,6 +1,6 @@
 
 server:
-  port: 8080
+  port: 0
 
 spring:
   h2:
@@ -23,17 +23,18 @@ mybatis:
   mapper-locations: mybatis-mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+  executorType: BATCH
 
 logging:
   level:
     com:
       charminseok: debug
 
-#eureka:
-#  instance:
-#    hostname: localhost
-#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8081/eureka
-#
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
