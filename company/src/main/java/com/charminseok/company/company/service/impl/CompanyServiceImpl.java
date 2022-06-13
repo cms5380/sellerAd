@@ -1,21 +1,20 @@
-package com.charminseok.company.service;
+package com.charminseok.company.company.service.impl;
 
-import com.charminseok.company.dto.CompanyInsertDto;
-import com.charminseok.company.dto.CompanyUpdateDto;
+import com.charminseok.company.company.dto.CompanyInsertDto;
+import com.charminseok.company.company.dto.CompanyUpdateDto;
+import com.charminseok.company.company.service.CompanyService;
 import com.charminseok.company.error.CompanyErrorCode;
 import com.charminseok.company.error.CompanyException;
 import com.charminseok.company.openfeign.client.ProductService;
-import com.charminseok.company.domain.CompanyDomain;
-import com.charminseok.company.dto.ResponseProduct;
-import com.charminseok.company.mapper.CompanyMapper;
-import com.charminseok.company.openfeign.client.dto.ProductDto;
+import com.charminseok.company.company.domain.CompanyDomain;
+import com.charminseok.company.openfeign.client.dto.ResponseProduct;
+import com.charminseok.company.company.mapper.CompanyMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService {
+public class CompanyServiceImpl implements CompanyService {
     private final CompanyMapper companyMapper;
     private final ProductService productService;
 

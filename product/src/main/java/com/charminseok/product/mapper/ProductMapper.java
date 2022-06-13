@@ -15,7 +15,7 @@ public interface ProductMapper {
             @Param("requestProduct") RequestProduct requestProduct,
             @Param("requestPaging") Paging paging);
 
-    void insertProduct(ProductCreateDto productCreateDto);
+    int insertProduct(ProductDomain productDomain);
 
     ProductDomain selectProduct(
             @Param("productDomain") ProductDomain productDomain
@@ -24,4 +24,6 @@ public interface ProductMapper {
     int updateProduct(ProductDomain productDomain);
 
     ProductDomain selectProductByCompanyName(String companyName);
+
+    int deleteProduct(Long productId);
 }

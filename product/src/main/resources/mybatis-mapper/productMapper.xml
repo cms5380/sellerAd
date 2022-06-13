@@ -61,10 +61,11 @@
 
     </select>
 
-    <insert id="insertProduct" parameterType="com.charminseok.product.dto.ProductCreateDto">
+    <insert id="insertProduct" keyProperty="productId" keyColumn="PRODUCT_ID" useGeneratedKeys="true"
+            parameterType="com.charminseok.product.domain.ProductDomain">
         INSERT INTO PRODUCT
             (COMPANY_NAME, PRODUCT_NAME, PRICE, STOCK_COUNT)
-        VALUES (#{companyName}, #{productName}, #{price}, #{stockCount})
+        VALUES (#{companyName}, #{productName}, #{price}, #{stockCount});
     </insert>
 
     <update id="updateProduct" parameterType="com.charminseok.product.domain.ProductDomain">
@@ -84,6 +85,6 @@
                 , STOCK_COUNT = #{stockCount}
             </if>
         </trim>
-        WHERE PRODUCT_ID = #{productId}
+        WHERE PRODUCT_ID = #{productId};
     </update>
 </mapper>

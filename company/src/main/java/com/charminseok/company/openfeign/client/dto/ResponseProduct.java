@@ -1,4 +1,4 @@
-package com.charminseok.company.dto;
+package com.charminseok.company.openfeign.client.dto;
 
 import lombok.Data;
 

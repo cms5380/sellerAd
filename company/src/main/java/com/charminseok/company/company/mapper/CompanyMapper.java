@@ -1,7 +1,7 @@
-package com.charminseok.company.mapper;
+package com.charminseok.company.company.mapper;
 
-import com.charminseok.company.domain.CompanyDomain;
-import com.charminseok.company.dto.CompanyInsertDto;
+import com.charminseok.company.company.domain.CompanyDomain;
+import com.charminseok.company.company.dto.CompanyInsertDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

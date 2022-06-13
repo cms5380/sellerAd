@@ -1,6 +1,7 @@
-package com.charminseok.company.mapper;
+package com.charminseok.company.contract.mapper;
 
-import com.charminseok.company.domain.ContractDomain;
+import com.charminseok.company.contract.domain.ContractDomain;
+import com.charminseok.company.contract.dto.ContractResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface ContractMapper {
 
     List<ContractDomain> selectContractList();
 
-    ContractDomain selectContractByCompanyId(Long companyId);
+    ContractResponseDto selectContractByCompanyId(Long companyId);
 }

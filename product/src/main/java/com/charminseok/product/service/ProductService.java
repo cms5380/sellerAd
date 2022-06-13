@@ -12,7 +12,7 @@ public interface ProductService {
 
     List<ProductDomain> getProductList(RequestProduct requestProduct, Paging paging);
 
-    void insertProduct(ProductCreateDto productCreateDto);
+    ProductDomain insertProduct(ProductCreateDto productCreateDto);
 
     ProductDomain getProduct(Long productId, RequestProduct requestProduct);
 

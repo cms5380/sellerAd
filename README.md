@@ -13,7 +13,7 @@ MicroService
 
 사용 기술
 
-Spring Boot, Spring cloud, h2(인메모리 DB), Maven, Mybatis
+Spring Boot, Spring cloud, h2(인메모리 DB), Maven, Mybatis, Kafka
 
 API Documentation: http://localhost:8080/swagger-ui.html
 ![img.png](img.png)

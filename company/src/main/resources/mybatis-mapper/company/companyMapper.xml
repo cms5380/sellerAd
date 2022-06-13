@@ -3,8 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.charminseok.company.mapper.CompanyMapper">
-    <resultMap id="companyMap" type="com.charminseok.company.domain.CompanyDomain">
+<mapper namespace="com.charminseok.company.company.mapper.CompanyMapper">
+    <resultMap id="companyMap" type="com.charminseok.company.company.domain.CompanyDomain">
         <id column="COMPANY_ID" property="companyId"/>
     </resultMap>
 
@@ -20,7 +20,7 @@
         WHERE COMPANY_NAME = #{companyName}
     </select>
 
-    <insert id="insertCompany" keyProperty="companyId" keyColumn="COMPANY_ID" useGeneratedKeys="true" parameterType="com.charminseok.company.dto.CompanyInsertDto">
+    <insert id="insertCompany" keyProperty="companyId" keyColumn="COMPANY_ID" useGeneratedKeys="true" parameterType="com.charminseok.company.company.dto.CompanyInsertDto">
         INSERT INTO Company (company_name, company_business_number, company_tel, company_address)
         values ( #{companyName}
                , #{companyBusinessNumber}
@@ -28,7 +28,7 @@
                , #{companyAddress});
     </insert>
 
-    <update id="updateCompany" parameterType="com.charminseok.company.domain.CompanyDomain">
+    <update id="updateCompany" parameterType="com.charminseok.company.company.domain.CompanyDomain">
         UPDATE COMPANY
         SET
         <trim prefixOverrides=",">

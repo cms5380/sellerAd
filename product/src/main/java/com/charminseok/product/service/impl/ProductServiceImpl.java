@@ -1,4 +1,4 @@
-package com.charminseok.product.service;
+package com.charminseok.product.service.impl;
 
 import com.charminseok.product.domain.ProductDomain;
 import com.charminseok.product.dto.ProductCreateDto;
@@ -8,6 +8,7 @@ import com.charminseok.product.dto.RequestProduct;
 import com.charminseok.product.error.ProductErrorCode;
 import com.charminseok.product.error.ProductException;
 import com.charminseok.product.mapper.ProductMapper;
+import com.charminseok.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -28,8 +29,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void insertProduct(ProductCreateDto productCreateDto) {
-        productMapper.insertProduct(productCreateDto);
+    public ProductDomain insertProduct(ProductCreateDto productCreateDto) {
+        ProductDomain productDomain = ProductDomain.builder()
+                .companyName(productCreateDto.getCompanyName())
+                .productName(productCreateDto.getProductName())
+                .price(productCreateDto.getPrice())
+                .stockCount(productCreateDto.getStockCount())
+                .build();
+        if(productMapper.insertProduct(productDomain) == 1){
+            return productDomain;
+        } else {
+            throw new ProductException(ProductErrorCode.INSERT_ERROR);
+        }
     }
 
     @Override

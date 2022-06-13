@@ -1,9 +1,9 @@
-package com.charminseok.company.controller;
+package com.charminseok.company.company.controller;
 
-import com.charminseok.company.domain.CompanyDomain;
-import com.charminseok.company.dto.CompanyInsertDto;
-import com.charminseok.company.dto.CompanyUpdateDto;
-import com.charminseok.company.service.CompanyService;
+import com.charminseok.company.company.domain.CompanyDomain;
+import com.charminseok.company.company.dto.CompanyInsertDto;
+import com.charminseok.company.company.dto.CompanyUpdateDto;
+import com.charminseok.company.company.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

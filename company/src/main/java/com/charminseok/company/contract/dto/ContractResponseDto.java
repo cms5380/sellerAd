@@ -1,11 +1,13 @@
-package com.charminseok.advertisement.openfeign.company.dto;
+package com.charminseok.company.contract.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class ResponseContract {
+@Builder
+public class ContractResponseDto {
     private Long contractId;
     private Long companyId;
     private String companyName;

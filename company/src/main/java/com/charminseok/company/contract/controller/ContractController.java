@@ -1,8 +1,10 @@
-package com.charminseok.company.controller;
+package com.charminseok.company.contract.controller;
 
-import com.charminseok.company.domain.ContractDomain;
-import com.charminseok.company.dto.ContractInsertDto;
-import com.charminseok.company.service.ContractService;
+import com.charminseok.company.contract.domain.ContractDomain;
+import com.charminseok.company.contract.dto.ContractInsertDto;
+import com.charminseok.company.contract.dto.ContractResponseDto;
+import com.charminseok.company.contract.service.ContractService;
+import com.charminseok.company.contract.service.impl.ContractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class ContractController {
 
     @GetMapping("/{companyId}")
     public ResponseEntity<?> getContractByCompanyId(@PathVariable("companyId") Long companyId) {
-        ContractDomain contractByCompanyId = contractService.getContractByCompanyId(companyId);
-        return new ResponseEntity<>(contractByCompanyId, HttpStatus.OK);
+        ContractResponseDto item = contractService.getContractByCompanyId(companyId);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 }

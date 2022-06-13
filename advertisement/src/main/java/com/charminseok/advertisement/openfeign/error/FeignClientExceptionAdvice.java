@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
-public class ExceptionAdvice {
+public class FeignClientExceptionAdvice {
     @ExceptionHandler(FeignException.class)
     public static ResponseEntity<ErrorForm> handleComapnyError(FeignException e){
         log.error(e.getMessage());

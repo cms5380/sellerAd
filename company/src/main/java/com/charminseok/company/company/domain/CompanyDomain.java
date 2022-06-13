@@ -1,4 +1,4 @@
-package com.charminseok.company.domain;
+package com.charminseok.company.company.domain;
 
 import lombok.*;
 
