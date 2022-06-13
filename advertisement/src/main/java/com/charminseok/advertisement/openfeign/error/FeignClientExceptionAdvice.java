@@ -24,6 +24,9 @@ public class FeignClientExceptionAdvice {
     public ErrorForm FeignClientExceptionHandler(FeignClientException ex) {
         ex.printStackTrace();
         log.error("feign error status: " + ex.getStatus());
+        if(ex.getStatus() == 500){
+            ex.setErrorForm(new ErrorForm("500", "서버 상태가 좋지 않습니다."));
+        }
 
         return ex.getErrorForm();
     }

@@ -16,32 +16,31 @@
 
     <select id="selectContractByStartDate" resultMap="contract">
         SELECT CONTRACT.COMPANY_ID
-        , CONTRACT.CONTRACT_START_DATE
-        , CONTRACT.CONTRACT_END_DATE
+             , CONTRACT.CONTRACT_START_DATE
+             , CONTRACT.CONTRACT_END_DATE
         FROM CONTRACT
-        INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
+                 INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
         WHERE CONTRACT.COMPANY_ID = #{companyId}
-        AND CONTRACT.CONTRACT_END_DATE BETWEEN NOW() AND TIMESTAMPADD(YEAR, 1, NOW())
+          AND CONTRACT.CONTRACT_END_DATE BETWEEN NOW() AND TIMESTAMPADD(YEAR, 1, NOW())
     </select>
 
     <select id="selectContractList" resultMap="contract">
         SELECT CONTRACT_ID
-        , COMPANY_ID
-        , CONTRACT_START_DATE
-        , CONTRACT_END_DATE
+             , COMPANY_ID
+             , CONTRACT_START_DATE
+             , CONTRACT_END_DATE
         FROM CONTRACT
     </select>
 
     <select id="selectContractByCompanyId" resultType="com.charminseok.company.contract.dto.ContractResponseDto">
         SELECT CONTRACT.CONTRACT_ID
-        , CONTRACT.COMPANY_ID
-        , CONTRACT.CONTRACT_START_DATE
-        , CONTRACT.CONTRACT_END_DATE
-        , COMPANY.COMPANY_NAME
+             , CONTRACT.COMPANY_ID
+             , COMPANY.COMPANY_NAME
+             , CONTRACT.CONTRACT_START_DATE
+             , CONTRACT.CONTRACT_END_DATE
         FROM CONTRACT
-        INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
+                 INNER JOIN COMPANY ON COMPANY.COMPANY_ID = CONTRACT.COMPANY_ID
         WHERE CONTRACT.COMPANY_ID = #{companyId}
-        ORDER BY CONTRACT.CONTRACT_START_DATE DESC
-        LIMIT 1;
+        ORDER BY CONTRACT.CONTRACT_START_DATE DESC LIMIT 1;
     </select>
 </mapper>

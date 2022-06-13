@@ -19,7 +19,8 @@ public class SettlementScheduler {
     private final Job job;
     private final JobLauncher jobLauncher;
 
-    @Scheduled(cron = "0 10 0 * * ?", zone = "Asia/Seoul")
+//    매일 새벽 1시 실행
+    @Scheduled(cron = "0 0 1 * * ?", zone = "Asia/Seoul")
     public void executeJob() {
         JobExecution execution;
         try {

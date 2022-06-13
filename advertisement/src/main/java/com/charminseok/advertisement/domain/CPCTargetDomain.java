@@ -15,6 +15,5 @@ import java.time.LocalDateTime;
 public class CPCTargetDomain {
     private Long cpcId;
     private Long advertisementId;
-    private LocalDateTime ClickDateTime;
-    private int advertisementPrice;
+    private LocalDateTime clickDatetime;
 }

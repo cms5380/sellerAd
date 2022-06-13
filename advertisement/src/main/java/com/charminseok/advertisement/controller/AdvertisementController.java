@@ -7,6 +7,7 @@ import com.charminseok.advertisement.dto.CPCCountResponseDto;
 import com.charminseok.advertisement.dto.RequestAdvertisement;
 import com.charminseok.advertisement.dto.ResponseAdvertisement;
 import com.charminseok.advertisement.service.AdvertisementService;
+import com.charminseok.advertisement.service.Impl.AdvertisementServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class AdvertisementController {
-    private final AdvertisementService advertisementService;
+    private final AdvertisementServiceImpl advertisementService;
 
     @GetMapping("/advertisements")
     public ResponseEntity<List<ResponseAdvertisement>> getAdvertisementList() {
@@ -38,7 +39,7 @@ public class AdvertisementController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @PostMapping("/advertisement/cpc/{advertisementId}")
+    @PostMapping("/advertisement/{advertisementId}/cpc")
     public ResponseEntity<CPCTargetDomain> clickAdvertisement(@PathVariable("advertisementId") Long advertisementId) {
         CPCTargetDomain item = advertisementService.clickAdvertisement(advertisementId);
         return new ResponseEntity<>(item, HttpStatus.OK);

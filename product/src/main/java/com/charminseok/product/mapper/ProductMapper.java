@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductMapper {
     List<ProductDomain> selectProductList(
             @Param("requestProduct") RequestProduct requestProduct,
-            @Param("requestPaging") Paging paging);
+            @Param("paging") Paging paging);
 
     int insertProduct(ProductDomain productDomain);
 
@@ -24,6 +24,4 @@ public interface ProductMapper {
     int updateProduct(ProductDomain productDomain);
 
     ProductDomain selectProductByCompanyName(String companyName);
-
-    int deleteProduct(Long productId);
 }

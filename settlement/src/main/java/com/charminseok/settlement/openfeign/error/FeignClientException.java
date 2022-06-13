@@ -8,7 +8,7 @@ public class FeignClientException extends RuntimeException{
     private final int status;
     private final String errorMessage;
     private final Map<String, Collection<String>> headers;
-    private final ErrorForm errorForm;
+    private ErrorForm errorForm;
 
 
     public FeignClientException(Integer status, String errorMessage, Map<String, Collection<String>> headers
@@ -34,5 +34,9 @@ public class FeignClientException extends RuntimeException{
 
     public ErrorForm getErrorForm() {
         return errorForm;
+    }
+
+    public void setErrorForm(ErrorForm errorForm){
+        this.errorForm = errorForm;
     }
 }

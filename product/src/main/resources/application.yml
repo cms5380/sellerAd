@@ -45,7 +45,7 @@ mybatis:
 logging:
   level:
     com:
-      charminseok: debug
+      charminseok: trace
 
 springdoc:
   api-docs:

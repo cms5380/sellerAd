@@ -10,6 +10,7 @@
         <module name="product" />
         <module name="sellerAdDiscoveryServer" />
         <module name="advertisement" />
+        <module name="companyAggregate" />
         <module name="company" />
         <module name="sellerAdApiGateway" />
         <module name="settlement" />
@@ -19,6 +20,7 @@
       <module name="advertisement" target="11" />
       <module name="company" target="11" />
       <module name="company-composite" target="11" />
+      <module name="companyAggregate" target="11" />
       <module name="contract" target="11" />
       <module name="product" target="11" />
       <module name="sellerAdApiGateway" target="11" />
@@ -31,6 +33,7 @@
       <module name="advertisement" options="-parameters" />
       <module name="company" options="-parameters" />
       <module name="company-composite" options="-parameters" />
+      <module name="companyAggregate" options="-parameters" />
       <module name="contract" options="-parameters" />
       <module name="product" options="-parameters" />
       <module name="sellerAdApiGateway" options="-parameters" />

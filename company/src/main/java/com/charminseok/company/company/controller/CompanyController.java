@@ -3,7 +3,7 @@ package com.charminseok.company.company.controller;
 import com.charminseok.company.company.domain.CompanyDomain;
 import com.charminseok.company.company.dto.CompanyInsertDto;
 import com.charminseok.company.company.dto.CompanyUpdateDto;
-import com.charminseok.company.company.service.CompanyService;
+import com.charminseok.company.company.service.impl.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import javax.validation.constraints.Min;
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
-    private final CompanyService companyService;
+    private final CompanyServiceImpl companyService;
 
     @PostMapping
     public ResponseEntity<CompanyDomain> registerCompany(@Valid @RequestBody CompanyInsertDto companyInsertDto) throws Exception {

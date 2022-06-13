@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -88,8 +89,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
 
     public CPCTargetDomain clickAdvertisement(Long advertisementId) {
+        AdvertisementDomain advertisementDomain = advertisementMapper.selectAdvertisement(advertisementId, new RequestAdvertisement());
+        if(advertisementDomain == null){
+            throw new AdvertisementException(AdvertisementErrorCode.NOT_EXISTS_ADVERTISEMENT);
+        }
+
         CPCTargetDomain cpcTargetDomain = CPCTargetDomain.builder()
                 .advertisementId(advertisementId)
+                .clickDatetime(LocalDateTime.now())
                 .build();
 
         if (advertisementMapper.insertCPCTarget(cpcTargetDomain) == 1) {

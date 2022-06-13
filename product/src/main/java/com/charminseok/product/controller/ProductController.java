@@ -6,6 +6,7 @@ import com.charminseok.product.dto.ProductUpdateDto;
 import com.charminseok.product.dto.Paging;
 import com.charminseok.product.dto.RequestProduct;
 import com.charminseok.product.service.ProductService;
+import com.charminseok.product.service.impl.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductService productService;
+    private final ProductServiceImpl productService;
 
     @GetMapping("/products")
     public ResponseEntity<?> getProducts(@ModelAttribute RequestProduct requestProduct, @ModelAttribute Paging paging){
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<?> getProduct(@RequestParam String companyName){
+    public ResponseEntity<?> getProductByCompanyName(@RequestParam String companyName){
         ProductDomain product = productService.getProductByCompanyName(companyName);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }

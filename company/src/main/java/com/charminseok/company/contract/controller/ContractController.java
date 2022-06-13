@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/contract")
 public class ContractController {
-    private final ContractService contractService;
+    private final ContractServiceImpl contractService;
 
     @PostMapping
     public ResponseEntity<?> registerCompany(@RequestBody ContractInsertDto contractInsertDto) {

@@ -38,14 +38,14 @@
         SELECT *
         FROM PRODUCT
         <where>
-            <if test="productDto.productId != null">
-                AND PRODUCT_ID = #{productDto.productId}
+            <if test="requestProduct.companyName != null">
+                AND COMPANY_NAME = #{requestProduct.companyName}
             </if>
-            <if test="productDto.productName != null">
+            <if test="requestProduct.productName != null">
                 AND PRODUCT_NAME = #{productDto.productName}
             </if>
-            <if test="productDto.stockCount != null">
-                AND STOCK_COUNT >= #{productDto.stockCount}
+            <if test="requestProduct.stockCount != null">
+                AND STOCK_COUNT >= #{requestProduct.stockCount}
             </if>
         </where>
         LIMIT
