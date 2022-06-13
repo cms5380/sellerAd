@@ -1,23 +1,30 @@
 package com.charminseok.settlement.openfeign.error;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import feign.codec.StringDecoder;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+
+@Slf4j
 public class FeignErrorDecoder implements ErrorDecoder {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final StringDecoder stringDecoder = new StringDecoder();
+
     @Override
-    public Exception decode(String methodKey, Response response) {
-        switch (response.status()){
-            case 400:
-                break;
-            case 404:
-                if (methodKey.contains("getProductByCompanyName")){
-                    return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No such company.");
-                }
-            default:
-                return new Exception(response.reason());
+    public FeignClientException decode(String methodKey, Response response) {
+        String message = null;
+        ErrorForm errorForm = null;
+        if (response.body() != null) {
+            try {
+                message = stringDecoder.decode(response, String.class).toString();
+                errorForm = objectMapper.readValue(message, ErrorForm.class);
+            } catch (IOException e) {
+                log.error(methodKey + "Error Deserializing response body from failed feign request response.", e);
+            }
         }
-        return null;
+        return new FeignClientException(response.status(), message, response.headers(), errorForm);
     }
 }
